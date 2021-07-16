@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphPlotting.Model
 {
-    class Reading
+    public class Reading
     {
         public int SignalStrength { get; set; }
 
