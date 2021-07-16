@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/GraphPlotting/DesignTimeBuild/.dtbcache.v2
+/GraphPlotting/bin/Debug/net5.0-windows/GraphPlotting.deps.json
+/GraphPlotting/bin/Debug/net5.0-windows/GraphPlotting.runtimeconfig.dev.json
+/GraphPlotting/bin/Debug/net5.0-windows/GraphPlotting.runtimeconfig.json
+/GraphPlotting/obj
