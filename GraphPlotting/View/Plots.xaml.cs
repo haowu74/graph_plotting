@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace GraphPlotting.View
 {
     /// <summary>
-    /// Interaction logic for Plot.xaml
+    /// Interaction logic for Plots.xaml
     /// </summary>
-    public partial class Plot : Page
+    public partial class Plots : Window
     {
-        public Plot()
+        public Plots()
         {
             InitializeComponent();
         }

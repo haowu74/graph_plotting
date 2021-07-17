@@ -1,11 +1,12 @@
-﻿<Window x:Class="GraphPlotting.View.Plot"
+﻿<Page x:Class="GraphPlotting.View.Plot"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphPlotting.View"
         mc:Ignorable="d"
-        Title="Plot" Height="700" Width="1200">
+        Title="Plot" >
+
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -18,11 +19,13 @@
         </Grid.RowDefinitions>
         <WpfPlot Name="MainPlot" Grid.RowSpan="2"/>
         <WpfPlot Name="Waveform" Grid.Row="2" Grid.RowSpan="2"/>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="Black" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
+            <TextBlock Foreground="Red" FontSize="10">SPO2 (%)</TextBlock>
+            <TextBlock Foreground="Red" Background="White" Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center">95</TextBlock>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -30,11 +33,19 @@
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1" Background="Black">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
+            <WpfPlot Name="SignalStrength" />
+            <Image Source="Images/Heart.png" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.7" ScaleY="0.7"></ScaleTransform>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
         </Grid>
     </Grid>
-</Window>
+</Page>
