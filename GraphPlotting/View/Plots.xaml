@@ -4,9 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GraphPlotting.View"
+        xmlns:uc="clr-namespace:GraphPlotting.View"
+        xmlns:vm="clr-namespace:GraphPlotting.ViewModel"
         mc:Ignorable="d"
         Title="Plots" Height="1000" Width="800">
-    <Grid>
+    <Window.Resources>
+        <vm:PlotsVM x:Key="vm"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource vm}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -16,9 +21,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Frame Grid.Row="0" Grid.Column="0" Source="Plot.xaml" />
-        <Frame Grid.Row="1" Grid.Column="0" Source="Plot.xaml" />
-        <Frame Grid.Row="1" Grid.Column="1" Source="Plot.xaml" />
-        <Frame Grid.Row="2" Grid.Column="0" Source="Plot.xaml" />
+        <uc:PlotControl x:Name="Plot1" Grid.Row="0" Grid.Column="0" Id="1"></uc:PlotControl>
+        <uc:PlotControl x:Name="Plot2" Grid.Row="1" Grid.Column="0" Id="2"></uc:PlotControl>
+        <uc:PlotControl x:Name="Plot3" Grid.Row="1" Grid.Column="1" Id="3"></uc:PlotControl>
+        <uc:PlotControl x:Name="Plot4" Grid.Row="2" Grid.Column="0" Id="4"></uc:PlotControl>
     </Grid>
 </Window>

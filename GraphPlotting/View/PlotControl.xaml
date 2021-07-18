@@ -1,12 +1,15 @@
-﻿<Page x:Class="GraphPlotting.View.Plot"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GraphPlotting.View"
-        mc:Ignorable="d"
-        Title="Plot" >
-
+﻿<UserControl x:Class="GraphPlotting.View.PlotControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GraphPlotting.View" 
+             xmlns:vm="clr-namespace:GraphPlotting.ViewModel" 
+             x:Name="uc"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <vm:PlotVM x:Key="vm"/>
+    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -25,7 +28,10 @@
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
             <TextBlock Foreground="Red" FontSize="10">SPO2 (%)</TextBlock>
-            <TextBlock Foreground="Red" Background="White" Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center">95</TextBlock>
+            <TextBlock Foreground="Red" Background="White" 
+                       Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Text="{Binding Path=Id, ElementName=uc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </TextBlock>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -48,4 +54,4 @@
             </Image>
         </Grid>
     </Grid>
-</Page>
+</UserControl>
