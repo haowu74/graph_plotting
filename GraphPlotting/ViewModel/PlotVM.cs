@@ -1,38 +1,37 @@
 ﻿using GraphPlotting.Model;
+using GraphPlotting.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace GraphPlotting.ViewModel
 {
-    public class PlotVM: INotifyPropertyChanged
+    public class PlotVM
     {
         // ten minutes data will be displayed
         private readonly TimeSpan timeSpan = new TimeSpan(0, 0, 0, 10, 0);
-        
+
         // The id of the signal channels: 1 - 4
-        private int id;
+        public int Id { get; set; }
 
-        private List<Reading> readings = new List<Reading>();
-
-        public object Id 
+        public List<Reading> Readings
         {
-            get { return (object)id; } 
-            set 
+            get
             {
-                id = (int)value;
-                OnPropertyChanged("Id");
-            } 
+                return DeviceReadings.Instance.Readings.Where(r => r.Id == Id).ToList();
+            }
         }
 
         public List<int> Spo2s
         {
             get
             {
-                return readings.Where(r => r.TimeStamp > DateTime.Now - timeSpan).Select(r => r.Spo2).ToList();
+                return Readings.Where(r => r.TimeStamp > DateTime.Now - timeSpan).Select(r => r.Spo2).ToList();
             }
         }
 
@@ -40,7 +39,7 @@ namespace GraphPlotting.ViewModel
         {
             get
             {
-                return readings.Where(r => r.TimeStamp > DateTime.Now - timeSpan).Select(r => r.Pulse).ToList(); ;
+                return Readings.Where(r => r.TimeStamp > DateTime.Now - timeSpan).Select(r => r.Pulse).ToList(); ;
             }
         }
 
@@ -48,7 +47,7 @@ namespace GraphPlotting.ViewModel
         {
             get
             {
-                return readings.Where(r => r.TimeStamp > DateTime.Now - timeSpan).Select(r => r.PulseWaveform).ToList(); ;
+                return Readings.Where(r => r.TimeStamp > DateTime.Now - timeSpan).Select(r => r.PulseWaveform).ToList(); ;
             }
         }
 
@@ -56,7 +55,7 @@ namespace GraphPlotting.ViewModel
         { 
             get 
             { 
-                return readings?.Select(r => r.SignalStrength)?.FirstOrDefault() ?? 0; 
+                return Readings?.Select(r => r.SignalStrength)?.FirstOrDefault() ?? 0; 
             } 
         }
 
@@ -70,15 +69,9 @@ namespace GraphPlotting.ViewModel
             get => Pulses?.FirstOrDefault() ?? 0;
         }
 
-        public PlotVM()
+        public PlotVM(int id)
         {
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            Id = id;
         }
     }
 }

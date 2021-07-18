@@ -1,8 +1,10 @@
 ﻿using GraphPlotting.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,48 +15,53 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GraphPlotting.View
 {
     /// <summary>
     /// Interaction logic for PlotControl.xaml
     /// </summary>
-    public partial class PlotControl : UserControl
+    public partial class PlotControl : UserControl, INotifyPropertyChanged
     {
-        private PlotVM viewModel;
-
-        public object Id 
-        { 
-            get
-            {
-                return viewModel.Id;
+        public int Id
+        {
+            get 
+            { 
+                return (int)this.GetValue(IdProperty); 
             }
             set 
-            {
-                viewModel.Id = value;
-            } 
+            { 
+                this.SetValue(IdProperty, value); 
+            }
         }
 
-        public List<int> Spo2s { get { return viewModel.Spo2s; } }
-
-        public int Spo2 { get { return viewModel.Spo2; } }
-
-        public List<int> Pulses { get { return viewModel.Pulses; } }
-
-        public int Pulse { get { return viewModel.Pulse; } }
-
-        public List<int> PulseWaveforms { get { return viewModel.PulseWaveforms; } }
-
-        public int SignalStrength { get { return viewModel.SignalStrength; } }
+        public PlotVM Plot { get; set; }
 
         public static readonly DependencyProperty IdProperty =
-            DependencyProperty.Register("Id", typeof(string),
-            typeof(PlotControl), new PropertyMetadata(""));
+            DependencyProperty.Register("Id", typeof(int),
+            typeof(PlotControl));
 
         public PlotControl()
         {
-            viewModel = new PlotVM();
             InitializeComponent();
+            Loaded += (sender, args) =>
+            {
+                Plot = new PlotVM(Id);
+                _timer = new Timer(state =>
+                {
+                    OnPropertyChanged("Plot");
+                }, null, 1000, 1000);
+            };
+        }
+
+        private Timer _timer;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

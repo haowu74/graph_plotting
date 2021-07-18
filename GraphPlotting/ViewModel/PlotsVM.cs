@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphPlotting.ViewModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,9 @@ namespace GraphPlotting.ViewModel
 {
     public class PlotsVM
     {
-
+        public PlotsVM()
+        {
+            DeviceHelper.Run();
+        }
     }
 }

@@ -5,12 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GraphPlotting.View" 
              xmlns:vm="clr-namespace:GraphPlotting.ViewModel" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              x:Name="uc"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <vm:PlotVM x:Key="vm"/>
-    </UserControl.Resources>
-    <Grid Margin="10">
+     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
@@ -30,7 +28,8 @@
             <TextBlock Foreground="Red" FontSize="10">SPO2 (%)</TextBlock>
             <TextBlock Foreground="Red" Background="White" 
                        Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                       Text="{Binding Path=Spo2, ElementName=uc, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                       Text="{Binding Path=Plot.Spo2, ElementName=uc, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                
             </TextBlock>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1" Background="Black">
@@ -41,7 +40,7 @@
             <TextBlock Foreground="Yellow" FontSize="10">PULSE (bpm)</TextBlock>
             <TextBlock Foreground="Yellow" Background="White" 
                        Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                       Text="{Binding Path=Pulse, ElementName=uc, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                       Text="{Binding Path=Plot.Pulse, ElementName=uc, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBlock>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" Background="Black">
