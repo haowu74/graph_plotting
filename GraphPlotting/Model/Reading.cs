@@ -15,5 +15,7 @@ namespace GraphPlotting.Model
         public int Pulse { get; set; }
 
         public int Spo2 { get; set; }
+
+        public DateTime TimeStamp { get; set; }
     }
 }

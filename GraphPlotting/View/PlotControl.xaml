@@ -30,21 +30,26 @@
             <TextBlock Foreground="Red" FontSize="10">SPO2 (%)</TextBlock>
             <TextBlock Foreground="Red" Background="White" 
                        Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                       Text="{Binding Path=Id, ElementName=uc, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                       Text="{Binding Path=Spo2, ElementName=uc, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBlock>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1" Background="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
+            <TextBlock Foreground="Yellow" FontSize="10">PULSE (bpm)</TextBlock>
+            <TextBlock Foreground="Yellow" Background="White" 
+                       Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Text="{Binding Path=Pulse, ElementName=uc, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+            </TextBlock>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" Background="Black">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
-            <WpfPlot Name="SignalStrength" />
+            <WpfPlot Name="Signal" />
             <Image Source="Images/Heart.png" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
                 <Image.RenderTransform>
                     <TransformGroup>

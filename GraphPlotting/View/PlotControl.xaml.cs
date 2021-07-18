@@ -35,6 +35,18 @@ namespace GraphPlotting.View
             } 
         }
 
+        public List<int> Spo2s { get { return viewModel.Spo2s; } }
+
+        public int Spo2 { get { return viewModel.Spo2; } }
+
+        public List<int> Pulses { get { return viewModel.Pulses; } }
+
+        public int Pulse { get { return viewModel.Pulse; } }
+
+        public List<int> PulseWaveforms { get { return viewModel.PulseWaveforms; } }
+
+        public int SignalStrength { get { return viewModel.SignalStrength; } }
+
         public static readonly DependencyProperty IdProperty =
             DependencyProperty.Register("Id", typeof(string),
             typeof(PlotControl), new PropertyMetadata(""));
