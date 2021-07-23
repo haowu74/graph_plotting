@@ -3,16 +3,15 @@ using GraphPlotting.ViewModel.Commands;
 using GraphPlotting.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GraphPlotting.ViewModel
 {
-    public class PlotsVM
+    public class PlotsVM : INotifyPropertyChanged
     {
-        public bool IsConnected { get; set; }
-
         public PlotsVM()
         {
             DeviceHelper.Run();
@@ -37,10 +36,31 @@ namespace GraphPlotting.ViewModel
                 DeviceId = 3,
                 Readings = new List<Reading>() { new Reading(3, 78, 0, 0, 0, DateTime.Now) }
             });
+            ConnectCommand = new ConnectCommand(this);
         }
 
         public List<DeviceReading> DeviceReadings { get; set; }
 
         public ConnectCommand ConnectCommand { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool isConnected;
+
+        public bool IsConnected 
+        {
+            get { return isConnected; }
+            set
+            {
+                isConnected = value;
+                OnPropertyChanged("IsConnected");
+            } 
+        }
+
     }
 }
