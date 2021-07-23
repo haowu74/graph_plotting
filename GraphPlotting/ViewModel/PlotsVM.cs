@@ -1,4 +1,5 @@
 ﻿using GraphPlotting.Model;
+using GraphPlotting.ViewModel.Commands;
 using GraphPlotting.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace GraphPlotting.ViewModel
 {
     public class PlotsVM
     {
+        public bool IsConnected { get; set; }
+
         public PlotsVM()
         {
             DeviceHelper.Run();
@@ -37,5 +40,7 @@ namespace GraphPlotting.ViewModel
         }
 
         public List<DeviceReading> DeviceReadings { get; set; }
+
+        public ConnectCommand ConnectCommand { get; set; }
     }
 }
