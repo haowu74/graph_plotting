@@ -16,7 +16,7 @@ namespace GraphPlotting.ViewModel.Helpers
         {
             while(isRunning)
             {
-                DeviceReadings.Instance.Readings.AddRange(ReadSerial());
+                // DeviceReadings.Instance.Readings.AddRange(ReadSerial());
                 Thread.Sleep(1000);
             }
         };

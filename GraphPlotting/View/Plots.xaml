@@ -11,19 +11,21 @@
     <Window.Resources>
         <vm:PlotsVM x:Key="vm"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource vm}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <uc:PlotControl x:Name="Plot1" Grid.Row="0" Grid.Column="0" Id="1"></uc:PlotControl>
-        <uc:PlotControl x:Name="Plot2" Grid.Row="1" Grid.Column="0" Id="2"></uc:PlotControl>
-        <uc:PlotControl x:Name="Plot3" Grid.Row="1" Grid.Column="1" Id="3"></uc:PlotControl>
-        <uc:PlotControl x:Name="Plot4" Grid.Row="2" Grid.Column="0" Id="4"></uc:PlotControl>
-    </Grid>
+    <DockPanel DataContext="{StaticResource vm}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[0]}" DeviceReadings="{Binding}" Grid.Row="0" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[1]}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[2]}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[3]}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
+        </Grid>
+    </DockPanel>
 </Window>

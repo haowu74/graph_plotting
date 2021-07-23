@@ -8,8 +8,6 @@ namespace GraphPlotting.Model
 {
     public class Reading
     {
-        public int Id { get; set; }
-
         public int SignalStrength { get; set; }
 
         public int PulseWaveform { get; set; }
@@ -22,7 +20,6 @@ namespace GraphPlotting.Model
 
         public Reading(int id, int spo2, int pulse, int wave, int ss, DateTime dt)
         {
-            Id = id;
             Spo2 = spo2;
             Pulse = pulse;
             PulseWaveform = wave;
