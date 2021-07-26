@@ -17,5 +17,6 @@ namespace GraphPlotting.Model
         public List<Reading> Readings = new List<Reading>();
 
         public Reading Reading => Readings.LastOrDefault();
+
     }
 }

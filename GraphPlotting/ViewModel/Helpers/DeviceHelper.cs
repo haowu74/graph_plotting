@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO.Ports;
+using System.Diagnostics;
 
 namespace GraphPlotting.ViewModel.Helpers
 {
@@ -12,40 +14,76 @@ namespace GraphPlotting.ViewModel.Helpers
     {
         private static bool isRunning;
 
-        private static Action Process = () =>
-        {
-            while(isRunning)
-            {
-                // DeviceReadings.Instance.Readings.AddRange(ReadSerial());
-                Thread.Sleep(1000);
-            }
-        };
+        private static string buffer = "";
+
+        private static int index = 0;
 
         public static List<Reading> ReadSerial()
         {
             DateTime dt = DateTime.Now;
-            Random rand = new Random();
+            var message = SerialPort.ReadExisting();
             var readings = new List<Reading>();
-            for (int id = 1; id <= 4; id++)
+            foreach (var ch in message)
             {
-                var spo2 = rand.Next(100);
-                var pulse = rand.Next(100);
-                var wave = rand.Next(100);
-                var ss = rand.Next(50);
-                readings.Add(new Reading(id, spo2, pulse, wave, ss, dt));
+                if (ch == '\n')
+                {
+                    if (index == 4)
+                    {
+                        var values = buffer.Split(",");
+                        int spo2;
+                        int pulse;
+                        int wave;
+                        int ss;
+                        if (values.Length == 5 && int.TryParse(values[1], out spo2) && int.TryParse(values[2], out pulse) && 
+                            int.TryParse(values[3], out wave) && int.TryParse(values[4], out ss))
+                        {
+                            readings.Add(new Reading(values[0], spo2, pulse, wave, ss, dt.Ticks));
+                        }
+                    }
+                    buffer = "";
+                    index = 0;
+                }
+                else if (ch == ',')
+                {
+                    index += 1;
+                    buffer += ch;
+                }
+                else
+                {
+                    buffer += ch;
+                }
             }
             return readings;
         }
 
-        public static void Run()
+        public static SerialPort SerialPort { get; set; }
+
+        public static void Connect(Action<List<Reading>> callback)
         {
             isRunning = true;
-            Task.Run(Process);
+            SerialPort.Open();
+            SerialPort.DataReceived += new SerialDataReceivedEventHandler((s, e) =>
+            {
+                var readings = DeviceHelper.ReadSerial();
+                callback(readings);
+            });
         } 
 
-        public static void Stop()
+        public static void Disconnect()
         {
             isRunning = false;
+            SerialPort.Close();
+            SerialPort = null;
+        }
+
+        public static List<string> GetSerialPorts()
+        {
+            List<string> ports = new List<string>();
+            foreach (string s in SerialPort.GetPortNames())
+            {
+                ports.Add(s);
+            }
+            return ports;
         }
     }
 }

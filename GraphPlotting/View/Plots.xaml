@@ -28,6 +28,17 @@
                 </MenuItem>
                 <MenuItem Header="Exit" Click="Exit_Click" />
             </MenuItem>
+            <MenuItem Header="Configure" ItemsSource="{Binding SelectPortCommands}">
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Command" Value="{Binding SelectPortCommand}"/>
+                        <Setter Property="Header" Value="{Binding PortName}"/>
+                        <Setter Property="CommandParameter" Value="{Binding PortName}"/>
+                        <Setter Property="IsCheckable" Value="True"/>
+                        <Setter Property="IsChecked" Value="{Binding IsSelected}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
             <MenuItem Header="About" Click="About_Click"/>
         </Menu>
 
@@ -41,10 +52,10 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[0]}" DeviceReadings="{Binding}" Grid.Row="0" Grid.Column="0"></uc:PlotControl>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[1]}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="0"></uc:PlotControl>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[2]}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[3]}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[0], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="0" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[1], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[2], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
+            <uc:PlotControl DataContext="{Binding DeviceReadings[3], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
         </Grid>
     </DockPanel>
 </Window>
