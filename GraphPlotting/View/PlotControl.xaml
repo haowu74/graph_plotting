@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              x:Name="uc"
              mc:Ignorable="d">
-     <Grid Margin="10">
+     <Grid Margin="0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
@@ -43,12 +43,12 @@
                        Text="{Binding Path=Reading.Pulse, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBlock>
         </Grid>
-        <Grid Grid.Row="2" Grid.Column="1" Background="Black">
+        <Grid Grid.Row="2" Grid.Column="1" Background="Black" ClipToBounds="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <WpfPlot Name="SignalPlot" Grid.Column="0"/>
+            <WpfPlot Name="SignalPlot" Margin="-15 -10 5 -10" Opacity="100" VerticalAlignment="Stretch" Grid.Column="0"/>
             <Image Source="Images/Heart.png" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
                 <Image.RenderTransform>
                     <TransformGroup>

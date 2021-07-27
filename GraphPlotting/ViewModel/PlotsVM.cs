@@ -1,4 +1,5 @@
 ﻿using GraphPlotting.Model;
+using GraphPlotting.View;
 using GraphPlotting.ViewModel.Commands;
 using GraphPlotting.ViewModel.Helpers;
 using System;
@@ -22,7 +23,7 @@ namespace GraphPlotting.ViewModel
             DeviceReadings.Add(new DeviceReading()
             {
                 DeviceId = 0,
-                Readings = new List<Reading>() { new Reading("M1",1,1,1,1,1)}
+                Readings = new List<Reading>() { new Reading("M1", 1, 1, 1, 1, 1) }
             });
             DeviceReadings.Add(new DeviceReading()
             {
@@ -57,6 +58,11 @@ namespace GraphPlotting.ViewModel
                 };
                 SelectPortCommands.Add(port);
             }
+
+            for (int i = 0; i < 4; i++)
+            {
+                SignalPlotValues[i] = new double[1] { 0 };
+            }
         }
 
         public ObservableCollection<DeviceReading> DeviceReadings { get; set; }
@@ -76,14 +82,14 @@ namespace GraphPlotting.ViewModel
 
         private bool isConnected;
 
-        public bool IsConnected 
+        public bool IsConnected
         {
             get { return isConnected; }
             set
             {
                 isConnected = value;
                 OnPropertyChanged("IsConnected");
-            } 
+            }
         }
 
         public string SelectedSerialPort { get; set; }
@@ -105,27 +111,30 @@ namespace GraphPlotting.ViewModel
                 if (r.DeviceId == "M1")
                 {
                     DeviceReadings[0].Readings.Add(r);
-                    // DeviceReadings[0].Reading = r;
                 }
                 else if (r.DeviceId == "M2")
                 {
                     DeviceReadings[1].Readings.Add(r);
-                    // DeviceReadings[1].Reading = r;
                 }
                 else if (r.DeviceId == "M3")
                 {
                     DeviceReadings[2].Readings.Add(r);
-                    // DeviceReadings[2].Reading = r;
                 }
                 else if (r.DeviceId == "M4")
                 {
                     DeviceReadings[3].Readings.Add(r);
-                    // DeviceReadings[3].Reading = r;
                 }
-                // DeviceReadings[0].Reading = DeviceReadings[0].Readings.LastOrDefault();
                 OnPropertyChanged("DeviceReadings");
+                SignalPlotValues[0][0] = (double)(DeviceReadings[0]?.Reading?.SignalStrength??0);
+                SignalPlotValues[1][0] = (double)(DeviceReadings[1]?.Reading?.SignalStrength??0);
+                SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength??0);
+                SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength??0);
 
             }
         }
+
+        public Plots PlotsView { get; set; }
+
+        public double[][] SignalPlotValues { get; set; } = new double[4][];
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphPlotting.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,15 @@ namespace GraphPlotting.View
     /// </summary>
     public partial class Plots : Window
     {
+        public PlotsVM ViewModel { get; set; }
+
         public Plots()
         {
             InitializeComponent();
+            ViewModel = (PlotsVM)(this.DataContext);
+            ViewModel.PlotsView = this;
+
+            InitPlots();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -39,6 +46,14 @@ namespace GraphPlotting.View
         {
             
             MessageBox.Show("Plots V0.0.1 \nAll right reserved.", "About", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
+        }
+
+        private void InitPlots()
+        {
+            Channel1.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[0]);
+            Channel2.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[1]);
+            Channel3.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[2]);
+            Channel4.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[3]);
         }
     }
 }

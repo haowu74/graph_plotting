@@ -8,10 +8,10 @@
         xmlns:vm="clr-namespace:GraphPlotting.ViewModel"
         mc:Ignorable="d"
         Title="Plots" Height="1000" Width="800">
-    <Window.Resources>
-        <vm:PlotsVM x:Key="vm"/>
-    </Window.Resources>
-    <DockPanel DataContext="{StaticResource vm}">
+    <Window.DataContext>
+        <vm:PlotsVM />
+    </Window.DataContext>
+    <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
                 <MenuItem Command="{Binding ConnectCommand}" CommandParameter="{Binding IsConnected, UpdateSourceTrigger=PropertyChanged}">
@@ -52,10 +52,10 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[0], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="0" Grid.Column="0"></uc:PlotControl>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[1], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="0"></uc:PlotControl>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[2], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
-            <uc:PlotControl DataContext="{Binding DeviceReadings[3], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl x:Name="Channel1" DataContext="{Binding DeviceReadings[0], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="0" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl x:Name="Channel2" DataContext="{Binding DeviceReadings[1], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl x:Name="Channel3" DataContext="{Binding DeviceReadings[2], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
+            <uc:PlotControl x:Name="Channel4" DataContext="{Binding DeviceReadings[3], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
         </Grid>
     </DockPanel>
 </Window>

@@ -43,15 +43,16 @@ namespace GraphPlotting.View
                 plotControl.DataContext = plotControl.DeviceReadings;
             }
         }
-
-        private double[] ss = { 10 }; 
         public PlotControl()
         {
             InitializeComponent();
 
-            SignalPlot.Plot.AddBar(ss);
             SignalPlot.Plot.AxisAutoX(margin: 0);
-            SignalPlot.Plot.SetAxisLimits(yMin: 0, yMax: 50);
+            SignalPlot.Plot.SetAxisLimits(yMin: 0, yMax: 100);
+            string[] empty = { "" };
+            SignalPlot.Plot.YTicks(empty);
+            SignalPlot.Plot.XTicks(empty);
+            //SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
             MainPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
@@ -61,17 +62,17 @@ namespace GraphPlotting.View
                 //double[] dataX = new double[] { 1, 2, 3, 4, 5 };
                 //double[] dataY = new double[] { 1, 4, 9, 16, 25 };
                 //MainPlot.Plot.AddScatter(dataX, dataY);
-                
+
                 //_timer = new Timer(state =>
                 //{
                 //    ss[0] = Plot.SignalStrength;
                 //    OnPropertyChanged("Plot");
                 //}, null, 1000, 1000);
 
-                //_renderTimer = new DispatcherTimer();
-                //_renderTimer.Interval = TimeSpan.FromMilliseconds(1000);
-                //_renderTimer.Tick += Render;
-                //_renderTimer.Start();
+                _renderTimer = new DispatcherTimer();
+                _renderTimer.Interval = TimeSpan.FromMilliseconds(1000);
+                _renderTimer.Tick += Render;
+                _renderTimer.Start();
             };
 
             Unloaded += (sender, args) => {
@@ -95,5 +96,7 @@ namespace GraphPlotting.View
         {
             SignalPlot.Render();
         }
+
+        public int SignalStrength { get; set; }
     }
 }
