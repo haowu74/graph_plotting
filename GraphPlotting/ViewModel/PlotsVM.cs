@@ -23,7 +23,7 @@ namespace GraphPlotting.ViewModel
             DeviceReadings.Add(new DeviceReading()
             {
                 DeviceId = 0,
-                Readings = new List<Reading>() { new Reading("M1", 1, 1, 1, 1, 1) }
+                Readings = new List<Reading>()
             });
             DeviceReadings.Add(new DeviceReading()
             {
@@ -62,6 +62,9 @@ namespace GraphPlotting.ViewModel
             for (int i = 0; i < 4; i++)
             {
                 SignalPlotValues[i] = new double[1] { 0 };
+                Waveforms[i] = Enumerable.Repeat<double>(0, Configuration.TimeSpan).ToArray();
+                Spo2s[i] = Enumerable.Repeat<double>(0, Configuration.TimeSpan).ToArray();
+                Pulses[i] = Enumerable.Repeat<double>(0, Configuration.TimeSpan).ToArray();
             }
         }
 
@@ -105,9 +108,10 @@ namespace GraphPlotting.ViewModel
 
         public void DispatchReadings(List<Reading> readings)
         {
+            long startTime = DateTime.Now.Ticks / 10000000 - Configuration.TimeSpan; ;
+
             foreach (var r in readings)
             {
-                //Debug.WriteLine($"{r.DeviceId} {r.Spo2} {r.SignalStrength} {r.PulseWaveform} {r.Pulse} {r.TimeStamp}");
                 if (r.DeviceId == "M1")
                 {
                     DeviceReadings[0].Readings.Add(r);
@@ -125,16 +129,61 @@ namespace GraphPlotting.ViewModel
                     DeviceReadings[3].Readings.Add(r);
                 }
                 OnPropertyChanged("DeviceReadings");
-                SignalPlotValues[0][0] = (double)(DeviceReadings[0]?.Reading?.SignalStrength??0);
-                SignalPlotValues[1][0] = (double)(DeviceReadings[1]?.Reading?.SignalStrength??0);
-                SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength??0);
-                SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength??0);
 
+                DeviceReadings[0].Readings.RemoveAll(r => r.TimeStamp < startTime);
+                DeviceReadings[1].Readings.RemoveAll(r => r.TimeStamp < startTime);
+                DeviceReadings[2].Readings.RemoveAll(r => r.TimeStamp < startTime);
+                DeviceReadings[3].Readings.RemoveAll(r => r.TimeStamp < startTime);
+
+                if(Updating)
+                {
+                    SignalPlotValues[0][0] = (double)(DeviceReadings[0]?.Reading?.SignalStrength ?? 0);
+                    SignalPlotValues[1][0] = (double)(DeviceReadings[1]?.Reading?.SignalStrength ?? 0);
+                    SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength ?? 0);
+                    SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength ?? 0);
+
+                    Process(DeviceReadings[0].Readings, ref Waveforms[0], ref Spo2s[0], ref Pulses[0], startTime);
+                    Process(DeviceReadings[1].Readings, ref Waveforms[1], ref Spo2s[1], ref Pulses[1], startTime);
+                    Process(DeviceReadings[2].Readings, ref Waveforms[2], ref Spo2s[2], ref Pulses[2], startTime);
+                    Process(DeviceReadings[3].Readings, ref Waveforms[3], ref Spo2s[3], ref Pulses[3], startTime);
+
+                    Updating = false;
+                }
             }
         }
 
         public Plots PlotsView { get; set; }
 
         public double[][] SignalPlotValues { get; set; } = new double[4][];
+
+        public double[][] Waveforms { get; set; } = new double[4][];
+
+        public double[][] Spo2s { get; set; } = new double[4][];
+
+        public double[][] Pulses { get; set; } = new double[4][];
+
+        private void Process(List<Reading> readings, ref double[] waveforms, ref double[] spo2s, ref double[] pulses, long startTime)
+        {
+             var reduced = readings.Where(r => r.TimeStamp >= startTime).GroupBy(r => r.TimeStamp)
+               .Select(g => new Reading(g.Select(g => g.DeviceId).FirstOrDefault(), (int)g.Average(g => g.Spo2), (int)g.Average(g => g.Pulse), (int)g.Average(g => g.PulseWaveform), (int)g.Average(g => g.SignalStrength), g.Key)).OrderBy(r => r.TimeStamp).ToList();
+            
+            for(var i = 0; i < Configuration.TimeSpan; i++)
+            {
+                var reading = reduced.FirstOrDefault(r => r.TimeStamp == startTime + i);
+                if (reading is not null)
+                {
+                    waveforms[i] = reading.PulseWaveform;
+                    spo2s[i] = reading.Spo2;
+                    pulses[i] = reading.Pulse;
+                }
+            }
+        }
+
+        public void UpdateView()
+        {
+            Updating = true;
+        }
+
+        public bool Updating { get; set; }
     }
 }

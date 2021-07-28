@@ -20,7 +20,7 @@ namespace GraphPlotting.ViewModel.Helpers
 
         public static List<Reading> ReadSerial()
         {
-            DateTime dt = DateTime.Now;
+            var dt = DateTime.Now.Ticks / 10000000;
             var message = SerialPort.ReadExisting();
             var readings = new List<Reading>();
             foreach (var ch in message)
@@ -37,7 +37,7 @@ namespace GraphPlotting.ViewModel.Helpers
                         if (values.Length == 5 && int.TryParse(values[1], out spo2) && int.TryParse(values[2], out pulse) && 
                             int.TryParse(values[3], out wave) && int.TryParse(values[4], out ss))
                         {
-                            readings.Add(new Reading(values[0], spo2, pulse, wave, ss, dt.Ticks));
+                            readings.Add(new Reading(values[0], spo2, pulse, wave, ss, dt));
                         }
                     }
                     buffer = "";

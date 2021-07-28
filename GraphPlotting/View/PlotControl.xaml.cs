@@ -54,36 +54,10 @@ namespace GraphPlotting.View
             SignalPlot.Plot.XTicks(empty);
             //SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
+            Waveform.Plot.SetAxisLimits(yMin: 0, yMax: 200);
+            MainPlot.Plot.SetAxisLimits(yMin: 0, yMax: 100);
             MainPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
-
-            Loaded += (sender, args) =>
-            {
-                //Plot = new PlotVM(Id);
-                //double[] dataX = new double[] { 1, 2, 3, 4, 5 };
-                //double[] dataY = new double[] { 1, 4, 9, 16, 25 };
-                //MainPlot.Plot.AddScatter(dataX, dataY);
-
-                //_timer = new Timer(state =>
-                //{
-                //    ss[0] = Plot.SignalStrength;
-                //    OnPropertyChanged("Plot");
-                //}, null, 1000, 1000);
-
-                _renderTimer = new DispatcherTimer();
-                _renderTimer.Interval = TimeSpan.FromMilliseconds(1000);
-                _renderTimer.Tick += Render;
-                _renderTimer.Start();
-            };
-
-            Unloaded += (sender, args) => {
-                //_timer?.Dispose();
-                //_renderTimer?.Stop();
-            };
         }
-
-        private Timer _timer;
-
-        private DispatcherTimer _renderTimer;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -92,9 +66,11 @@ namespace GraphPlotting.View
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void Render(object sender, EventArgs e)
+        public void Render()
         {
             SignalPlot.Render();
+            Waveform.Render();
+            MainPlot.Render();
         }
 
         public int SignalStrength { get; set; }
