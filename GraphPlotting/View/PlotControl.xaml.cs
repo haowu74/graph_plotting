@@ -55,7 +55,10 @@ namespace GraphPlotting.View
             //SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
             Waveform.Plot.SetAxisLimits(yMin: 0, yMax: 200);
-            MainPlot.Plot.SetAxisLimits(yMin: 0, yMax: 100);
+            Waveform.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
+
+            MainPlot.Plot.SetAxisLimits(yMin: 0, yMax: 20, yAxisIndex: 0);
+            MainPlot.Plot.SetAxisLimits(yMin: 0, yMax: 200, yAxisIndex: 1);
             MainPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
         }
 

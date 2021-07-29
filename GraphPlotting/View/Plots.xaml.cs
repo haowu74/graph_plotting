@@ -69,19 +69,37 @@ namespace GraphPlotting.View
 
             double[] X = Enumerable.Range(0, Configuration.TimeSpan).Select(i => (double)i).ToArray();
 
-            //Channel1.Waveform.Plot.AddScatter(X, ViewModel.Waveforms[0]);
-            //Channel2.Waveform.Plot.AddScatter(X, ViewModel.Waveforms[1]);
-            //Channel3.Waveform.Plot.AddScatter(X, ViewModel.Waveforms[2]);
-            //Channel4.Waveform.Plot.AddScatter(X, ViewModel.Waveforms[3]);
             Channel1.Waveform.Plot.AddSignal(ViewModel.Waveforms[0]);
             Channel2.Waveform.Plot.AddSignal(ViewModel.Waveforms[1]);
             Channel3.Waveform.Plot.AddSignal(ViewModel.Waveforms[2]);
             Channel4.Waveform.Plot.AddSignal(ViewModel.Waveforms[3]);
 
-            Channel1.MainPlot.Plot.AddScatter(X, ViewModel.Spo2s[0]);
-            Channel2.MainPlot.Plot.AddScatter(X, ViewModel.Spo2s[1]);
-            Channel3.MainPlot.Plot.AddScatter(X, ViewModel.Spo2s[2]);
-            Channel4.MainPlot.Plot.AddScatter(X, ViewModel.Spo2s[3]);
+            var x = Channel1.MainPlot.Plot.AddSignal(ViewModel.Spo2s[0]);
+            x.YAxisIndex = 0;
+            x.Color = System.Drawing.Color.Red;
+            x = Channel2.MainPlot.Plot.AddSignal(ViewModel.Spo2s[1]);
+            x.YAxisIndex = 0;
+            x.Color = System.Drawing.Color.Red;
+            x = Channel3.MainPlot.Plot.AddSignal(ViewModel.Spo2s[2]);
+            x.YAxisIndex = 0;
+            x.Color = System.Drawing.Color.Red;
+            x = Channel4.MainPlot.Plot.AddSignal(ViewModel.Spo2s[3]);
+            x.YAxisIndex = 0;
+            x.Color = System.Drawing.Color.Red;
+
+
+            x = Channel1.MainPlot.Plot.AddSignal(ViewModel.Pulses[0]);
+            x.YAxisIndex = 1;
+            x.Color = System.Drawing.Color.Orange;
+            x = Channel2.MainPlot.Plot.AddSignal(ViewModel.Pulses[1]);
+            x.YAxisIndex = 1;
+            x.Color = System.Drawing.Color.Orange;
+            x = Channel3.MainPlot.Plot.AddSignal(ViewModel.Pulses[2]);
+            x.YAxisIndex = 1;
+            x.Color = System.Drawing.Color.Orange;
+            x = Channel4.MainPlot.Plot.AddSignal(ViewModel.Pulses[3]);
+            x.YAxisIndex = 1;
+            x.Color = System.Drawing.Color.Orange;
         }
 
         private void Render(object sender, EventArgs e)
