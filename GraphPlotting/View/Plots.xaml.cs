@@ -64,7 +64,7 @@ namespace GraphPlotting.View
         private void About_Click(object sender, RoutedEventArgs e)
         {
             
-            MessageBox.Show("Plots V0.0.1 \nAll right reserved.", "About", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
+            MessageBox.Show("SpO2 Integrator V0.0.1 \nAll rights reserved.", "About", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
         }
 
         private void InitPlots()
