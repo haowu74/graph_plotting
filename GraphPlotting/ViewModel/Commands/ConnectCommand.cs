@@ -14,7 +14,11 @@ namespace GraphPlotting.ViewModel.Commands
     {
         public PlotsVM ViewModel { get; set; }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         public ConnectCommand(PlotsVM vm)
         {
@@ -24,7 +28,7 @@ namespace GraphPlotting.ViewModel.Commands
         public bool CanExecute(object parameter)
         {
             // Check if any COM port is selected.
-            return true;
+            return !string.IsNullOrEmpty(ViewModel.SelectedSerialPort);
         }
 
         public void Execute(object parameter)

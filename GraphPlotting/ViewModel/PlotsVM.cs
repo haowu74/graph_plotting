@@ -94,7 +94,16 @@ namespace GraphPlotting.ViewModel
             }
         }
 
-        public string SelectedSerialPort { get; set; }
+        private string selectedSerialPort;
+        public string SelectedSerialPort 
+        { 
+            get { return selectedSerialPort; }
+            set
+            {
+                selectedSerialPort = value;
+                OnPropertyChanged("SelectedSerialPort");
+            }
+        }
 
         public List<string> SerialPorts { get; set; }
 
