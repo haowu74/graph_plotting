@@ -67,16 +67,20 @@ namespace GraphPlotting.View
             Waveform.Plot.Grid(false);
             Waveform.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
+            MainPlot.Plot.SetAxisLimits(xMin: 0, xMax: 600);
             MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 100, yAxisIndex: 0);
             MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 180, yAxisIndex: 1);
-            MainPlot.Plot.XAxis.Ticks(false);
+            MainPlot.Plot.XAxis.Ticks(true);
+            MainPlot.Plot.XAxis.TickLabelStyle(fontSize: 20);
             MainPlot.Plot.XAxis.Color(Color.White);
             MainPlot.Plot.XAxis2.Color(Color.White);
             MainPlot.Plot.YAxis.Color(Color.White);
             MainPlot.Plot.YAxis2.Ticks(true);
+            MainPlot.Plot.YAxis.TickLabelStyle(fontSize: 20);
+            MainPlot.Plot.YAxis2.TickLabelStyle(fontSize: 20);
             MainPlot.Plot.YAxis2.Color(Color.White);
-            MainPlot.Plot.YAxis.Label("SPO2(%)", Color.FromArgb(0xb2, 0x00, 0x00), bold: true);
-            MainPlot.Plot.YAxis2.Label("Pulse(bpm)", Color.FromArgb(0xef, 0xde, 0x00), bold: true);
+            MainPlot.Plot.YAxis.Label("SPO2(%)", Color.FromArgb(0xb2, 0x00, 0x00), bold: true, size:20);
+            MainPlot.Plot.YAxis2.Label("Pulse(bpm)", Color.FromArgb(0xef, 0xde, 0x00), bold: true, size: 20);
             MainPlot.Plot.Grid(false);
             MainPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
         }
