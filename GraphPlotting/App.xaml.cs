@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphPlotting.ViewModel.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,8 @@ namespace GraphPlotting
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+        }
     }
 }

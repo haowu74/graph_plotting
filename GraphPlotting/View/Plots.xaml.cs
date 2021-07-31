@@ -1,5 +1,5 @@
-﻿using GraphPlotting.Model;
-using GraphPlotting.ViewModel;
+﻿using GraphPlotting.ViewModel;
+using GraphPlotting.ViewModel.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +40,13 @@ namespace GraphPlotting.View
                 _renderTimer.Interval = TimeSpan.FromMilliseconds(1000);
                 _renderTimer.Tick += Render;
                 _renderTimer.Start();
+            };
+
+            Closing += (sender, args) =>
+            {
+                _renderTimer.Stop();
+                _renderTimer = null;
+                DeviceHelper.Disconnect();
             };
         }
 

@@ -12,8 +12,6 @@ namespace GraphPlotting.ViewModel.Helpers
 {
     public class DeviceHelper
     {
-        private static bool isRunning;
-
         private static string buffer = "";
 
         private static int index = 0;
@@ -60,7 +58,6 @@ namespace GraphPlotting.ViewModel.Helpers
 
         public static void Connect(Action<List<Reading>> callback)
         {
-            isRunning = true;
             SerialPort.Open();
             SerialPort.DataReceived += new SerialDataReceivedEventHandler((s, e) =>
             {
@@ -71,7 +68,6 @@ namespace GraphPlotting.ViewModel.Helpers
 
         public static void Disconnect()
         {
-            isRunning = false;
             SerialPort.Close();
             SerialPort = null;
         }
