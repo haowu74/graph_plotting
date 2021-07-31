@@ -40,7 +40,6 @@ namespace GraphPlotting.ViewModel
                 DeviceId = 3,
                 Readings = new List<Reading>()
             });
-            // DeviceReadings[0].Reading = DeviceReadings[0].Readings.LastOrDefault();
 
             ConnectCommand = new ConnectCommand(this);
             SelectPortCommand = new SelectPortCommand(this);
@@ -62,9 +61,9 @@ namespace GraphPlotting.ViewModel
             for (int i = 0; i < 4; i++)
             {
                 SignalPlotValues[i] = new double[1] { 0 };
-                Waveforms[i] = Enumerable.Repeat<double>(0, Configuration.TimeSpan).ToArray();
-                Spo2s[i] = Enumerable.Repeat<double>(0, Configuration.TimeSpan).ToArray();
-                Pulses[i] = Enumerable.Repeat<double>(0, Configuration.TimeSpan).ToArray();
+                Waveforms[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
+                Spo2s[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
+                Pulses[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
             }
         }
 
@@ -128,7 +127,6 @@ namespace GraphPlotting.ViewModel
                 {
                     DeviceReadings[3].Readings.Add(r);
                 }
-                OnPropertyChanged("DeviceReadings");
 
                 DeviceReadings[0].Readings.RemoveAll(r => r.TimeStamp < startTime);
                 DeviceReadings[1].Readings.RemoveAll(r => r.TimeStamp < startTime);
@@ -146,6 +144,8 @@ namespace GraphPlotting.ViewModel
                     Process(DeviceReadings[1].Readings, ref Waveforms[1], ref Spo2s[1], ref Pulses[1], startTime);
                     Process(DeviceReadings[2].Readings, ref Waveforms[2], ref Spo2s[2], ref Pulses[2], startTime);
                     Process(DeviceReadings[3].Readings, ref Waveforms[3], ref Spo2s[3], ref Pulses[3], startTime);
+
+                    OnPropertyChanged("DeviceReadings");
 
                     Updating = false;
                 }

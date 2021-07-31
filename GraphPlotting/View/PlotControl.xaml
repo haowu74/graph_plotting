@@ -25,9 +25,9 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
-            <TextBlock Foreground="Red" FontSize="10">SPO2 (%)</TextBlock>
-            <TextBlock Foreground="Red" Background="White" 
-                       Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <TextBlock Foreground="#ED1C24" FontSize="10">SPO2 (%)</TextBlock>
+            <TextBlock Foreground="#ED1C24" Background="White" 
+                       Grid.Row="1" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="50" TextAlignment="Center"
                        Text="{Binding Path=Reading.Spo2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                 
             </TextBlock>
@@ -37,18 +37,18 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
-            <TextBlock Foreground="Yellow" FontSize="10">PULSE (bpm)</TextBlock>
-            <TextBlock Foreground="Yellow" Background="White" 
-                       Grid.Row="1" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <TextBlock Foreground="#FFF200" FontSize="10">PULSE (bpm)</TextBlock>
+            <TextBlock Foreground="#FFF200" Background="White" 
+                       Grid.Row="1" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="50" TextAlignment="Center"
                        Text="{Binding Path=Reading.Pulse, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBlock>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" Background="Black" ClipToBounds="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <WpfPlot Name="SignalPlot" Margin="-15 -10 5 -10" Opacity="100" VerticalAlignment="Stretch" Grid.Column="0"/>
+            <WpfPlot Name="SignalPlot" Margin="-5 -5 -5 -5" Opacity="100" VerticalAlignment="Stretch" Grid.Column="0"/>
             <Image Source="Images/Heart.png" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
                 <Image.RenderTransform>
                     <TransformGroup>

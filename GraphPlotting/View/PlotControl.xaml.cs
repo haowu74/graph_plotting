@@ -47,18 +47,34 @@ namespace GraphPlotting.View
         {
             InitializeComponent();
 
-            SignalPlot.Plot.AxisAutoX(margin: 0);
+            SignalPlot.Plot.SetAxisLimits(xMin: 0, xMax: 0);
             SignalPlot.Plot.SetAxisLimits(yMin: 0, yMax: 100);
-            string[] empty = { "" };
-            SignalPlot.Plot.YTicks(empty);
-            SignalPlot.Plot.XTicks(empty);
-            //SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
+            SignalPlot.Plot.XAxis.Ticks(false);
+            SignalPlot.Plot.XAxis.Color(Color.Black);
+            SignalPlot.Plot.XAxis2.Color(Color.Black);
+            SignalPlot.Plot.YAxis.Ticks(false);
+            SignalPlot.Plot.YAxis.Color(Color.Black);
+            SignalPlot.Plot.YAxis2.Color(Color.Black);
+            SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.White);
 
-            Waveform.Plot.SetAxisLimits(yMin: 0, yMax: 200);
+            Waveform.Plot.SetAxisLimits(xMin: 0, xMax: 600);
+            Waveform.Plot.SetAxisLimits(yMin: 0, yMax: 80);
+            Waveform.Plot.XAxis.Ticks(false);
+            Waveform.Plot.XAxis.Color(Color.White);
+            Waveform.Plot.XAxis2.Color(Color.White);
+            Waveform.Plot.YAxis.Ticks(false);
+            Waveform.Plot.YAxis.Color(Color.White);
+            Waveform.Plot.YAxis2.Color(Color.White);
             Waveform.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
-            MainPlot.Plot.SetAxisLimits(yMin: 0, yMax: 20, yAxisIndex: 0);
-            MainPlot.Plot.SetAxisLimits(yMin: 0, yMax: 200, yAxisIndex: 1);
+            MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 100, yAxisIndex: 0);
+            MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 180, yAxisIndex: 1);
+            MainPlot.Plot.XAxis.Ticks(false);
+            MainPlot.Plot.XAxis.Color(Color.White);
+            MainPlot.Plot.XAxis2.Color(Color.White);
+            MainPlot.Plot.YAxis.Color(Color.White);
+            MainPlot.Plot.YAxis2.Ticks(true);
+            MainPlot.Plot.YAxis2.Color(Color.White);
             MainPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
         }
 
@@ -75,7 +91,5 @@ namespace GraphPlotting.View
             Waveform.Render();
             MainPlot.Render();
         }
-
-        public int SignalStrength { get; set; }
     }
 }
