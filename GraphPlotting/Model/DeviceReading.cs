@@ -10,6 +10,8 @@ namespace GraphPlotting.Model
     {
         public int DeviceId { get; set; }
 
+        public string DeviceIdLabel => $"<{DeviceId + 1}>";
+
         public DeviceReading()
         {
         }

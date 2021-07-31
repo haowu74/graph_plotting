@@ -68,7 +68,10 @@ namespace GraphPlotting.ViewModel.Helpers
 
         public static void Disconnect()
         {
-            SerialPort.Close();
+            if (SerialPort?.IsOpen??false)
+            {
+                SerialPort.Close();
+            }
             SerialPort = null;
         }
 

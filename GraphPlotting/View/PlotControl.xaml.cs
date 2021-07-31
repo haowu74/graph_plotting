@@ -64,6 +64,7 @@ namespace GraphPlotting.View
             Waveform.Plot.YAxis.Ticks(false);
             Waveform.Plot.YAxis.Color(Color.White);
             Waveform.Plot.YAxis2.Color(Color.White);
+            Waveform.Plot.Grid(false);
             Waveform.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
             MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 100, yAxisIndex: 0);
@@ -74,6 +75,9 @@ namespace GraphPlotting.View
             MainPlot.Plot.YAxis.Color(Color.White);
             MainPlot.Plot.YAxis2.Ticks(true);
             MainPlot.Plot.YAxis2.Color(Color.White);
+            MainPlot.Plot.YAxis.Label("SPO2(%)", Color.FromArgb(0xb2, 0x00, 0x00), bold: true);
+            MainPlot.Plot.YAxis2.Label("Pulse(bpm)", Color.FromArgb(0xef, 0xde, 0x00), bold: true);
+            MainPlot.Plot.Grid(false);
             MainPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
         }
 
