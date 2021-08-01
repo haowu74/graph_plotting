@@ -54,8 +54,10 @@
             </Grid.RowDefinitions>
             <uc:PlotControl x:Name="Channel1" DataContext="{Binding DeviceReadings[0], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="0" Grid.Column="0"></uc:PlotControl>
             <uc:PlotControl x:Name="Channel2" DataContext="{Binding DeviceReadings[1], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="0"></uc:PlotControl>
-            <uc:PlotControl x:Name="Channel3" DataContext="{Binding DeviceReadings[2], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
-            <uc:PlotControl x:Name="Channel4" DataContext="{Binding DeviceReadings[3], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl x:Name="Channel3" DataContext="{Binding DeviceReadings[2], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="2" Grid.Column="0"></uc:PlotControl>
+            <uc:PlotControl x:Name="Channel4" DataContext="{Binding DeviceReadings[3], UpdateSourceTrigger=PropertyChanged, IsAsync=True}" DeviceReadings="{Binding}" Grid.Row="1" Grid.Column="1"></uc:PlotControl>
+            <Image Source="Images/background.jpg" Stretch="Fill" Grid.Column="1" Grid.Row="0" />
+            <Image Source="Images/background.jpg" Stretch="Fill" Grid.Column="1" Grid.Row="2" />
         </Grid>
     </DockPanel>
 </Window>
