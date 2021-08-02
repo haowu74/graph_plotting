@@ -6,14 +6,14 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "GraphPlotting/1.0.0": {
+      "SpO2/1.0.0": {
         "dependencies": {
           "ScottPlot.WPF": "4.1.16",
           "System.IO.Ports": "5.0.1",
           "sqlite-net-pcl": "1.7.335"
         },
         "runtime": {
-          "GraphPlotting.dll": {}
+          "SpO2.dll": {}
         }
       },
       "Microsoft.NETCore.Platforms/5.0.0": {},
@@ -257,7 +257,7 @@
     }
   },
   "libraries": {
-    "GraphPlotting/1.0.0": {
+    "SpO2/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

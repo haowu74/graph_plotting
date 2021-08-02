@@ -5,6 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>View\Icons\icon.ico</ApplicationIcon>
+    <AssemblyName>SpO2</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

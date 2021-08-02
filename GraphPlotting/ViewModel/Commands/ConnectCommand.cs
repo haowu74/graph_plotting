@@ -27,7 +27,6 @@ namespace GraphPlotting.ViewModel.Commands
 
         public bool CanExecute(object parameter)
         {
-            // Check if any COM port is selected.
             return !string.IsNullOrEmpty(ViewModel.SelectedSerialPort);
         }
 
@@ -43,7 +42,6 @@ namespace GraphPlotting.ViewModel.Commands
                 if (Disconnect())
                 {
                     ViewModel.IsConnected = false;
-                    
                 }
             }
             else
@@ -51,7 +49,6 @@ namespace GraphPlotting.ViewModel.Commands
                 if (Connect())
                 {
                     ViewModel.IsConnected = true;
-                    
                 }
             }
         }

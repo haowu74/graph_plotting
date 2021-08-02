@@ -26,6 +26,13 @@
                         </Style>
                     </MenuItem.Style>
                 </MenuItem>
+                <MenuItem Command="{Binding ClearCommand}" CommandParameter="{Binding IsConnected, UpdateSourceTrigger=PropertyChanged}">
+                    <MenuItem.Style>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Header" Value="Clear"/>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
                 <MenuItem Header="Exit" Click="Exit_Click" />
             </MenuItem>
             <MenuItem Header="Configure" ItemsSource="{Binding SelectPortCommands}">

@@ -42,6 +42,7 @@ namespace GraphPlotting.ViewModel
             });
 
             ConnectCommand = new ConnectCommand(this);
+            ClearCommand = new ClearCommand(this);
             SelectPortCommand = new SelectPortCommand(this);
 
             SerialPorts = DeviceHelper.GetSerialPorts();
@@ -64,12 +65,15 @@ namespace GraphPlotting.ViewModel
                 Waveforms[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
                 Spo2s[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
                 Pulses[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
+                XAxial[i] = Enumerable.Repeat<double>(-1000, Configuration.TimeSpan).ToArray();
             }
         }
 
         public ObservableCollection<DeviceReading> DeviceReadings { get; set; }
 
         public ConnectCommand ConnectCommand { get; set; }
+
+        public ClearCommand ClearCommand { get; set; }
 
         public ObservableCollection<SelectPort> SelectPortCommands { get; set; }
 
@@ -149,10 +153,10 @@ namespace GraphPlotting.ViewModel
                     SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength ?? 0);
                     SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength ?? 0);
 
-                    Process(DeviceReadings[0].Readings, ref Waveforms[0], ref Spo2s[0], ref Pulses[0], startTime);
-                    Process(DeviceReadings[1].Readings, ref Waveforms[1], ref Spo2s[1], ref Pulses[1], startTime);
-                    Process(DeviceReadings[2].Readings, ref Waveforms[2], ref Spo2s[2], ref Pulses[2], startTime);
-                    Process(DeviceReadings[3].Readings, ref Waveforms[3], ref Spo2s[3], ref Pulses[3], startTime);
+                    Process(DeviceReadings[0].Readings, ref Waveforms[0], ref Spo2s[0], ref Pulses[0], ref XAxial[0], startTime);
+                    Process(DeviceReadings[1].Readings, ref Waveforms[1], ref Spo2s[1], ref Pulses[1], ref XAxial[1], startTime);
+                    Process(DeviceReadings[2].Readings, ref Waveforms[2], ref Spo2s[2], ref Pulses[2], ref XAxial[2], startTime);
+                    Process(DeviceReadings[3].Readings, ref Waveforms[3], ref Spo2s[3], ref Pulses[3], ref XAxial[3], startTime);
 
                     OnPropertyChanged("DeviceReadings");
 
@@ -160,8 +164,6 @@ namespace GraphPlotting.ViewModel
                 }
             }
         }
-
-        public Plots PlotsView { get; set; }
 
         public double[][] SignalPlotValues { get; set; } = new double[4][];
 
@@ -171,12 +173,12 @@ namespace GraphPlotting.ViewModel
 
         public double[][] Pulses { get; set; } = new double[4][];
 
-        private void Process(List<Reading> readings, ref double[] waveforms, ref double[] spo2s, ref double[] pulses, long startTime)
+        private void Process(List<Reading> readings, ref double[] waveforms, ref double[] spo2s, ref double[] pulses, ref double[] xAxial, long startTime)
         {
              var reduced = readings.Where(r => r.TimeStamp >= startTime).GroupBy(r => r.TimeStamp)
                .Select(g => new Reading(g.Select(g => g.DeviceId).FirstOrDefault(), (int)g.Average(g => g.Spo2), (int)g.Average(g => g.Pulse), (int)g.Average(g => g.PulseWaveform), (int)g.Average(g => g.SignalStrength), g.Key)).OrderBy(r => r.TimeStamp).ToList();
-            
-            for(var i = 0; i < Configuration.TimeSpan; i++)
+            int x = 0;
+            for(var i = Configuration.TimeSpan - 1; i >= 0; i--)
             {
                 var reading = reduced.FirstOrDefault(r => r.TimeStamp == startTime + i);
                 if (reading is not null)
@@ -184,6 +186,17 @@ namespace GraphPlotting.ViewModel
                     waveforms[i] = reading.PulseWaveform;
                     spo2s[i] = reading.Spo2;
                     pulses[i] = reading.Pulse;
+                    xAxial[i] = i;
+                }
+                else
+                {
+                    if (i + 1 < Configuration.TimeSpan)
+                    {
+                        xAxial[i] = xAxial[i + 1];
+                        waveforms[i] = waveforms[i + 1];
+                        spo2s[i] = spo2s[i + 1];
+                        pulses[i] = pulses[i + 1];
+                    }
                 }
             }
         }
@@ -194,5 +207,24 @@ namespace GraphPlotting.ViewModel
         }
 
         public bool Updating { get; set; }
+
+        public double[][] XAxial { get; set; } = new double[4][];
+
+        public void ClearPlots()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < Configuration.TimeSpan; j++)
+                {
+                    Waveforms[i][j] = -1000;
+                    Spo2s[i][j] = -1000;
+                    Pulses[i][j] = -1000;
+                    XAxial[i][j] = -1000;
+                }
+                SignalPlotValues[i][0] = 0;
+                DeviceReadings[i].Readings.Clear();
+            }
+            OnPropertyChanged("DeviceReadings");
+        }
     }
 }
