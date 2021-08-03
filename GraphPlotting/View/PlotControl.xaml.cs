@@ -47,7 +47,7 @@ namespace GraphPlotting.View
             InitializeComponent();
 
             SignalPlot.Plot.SetAxisLimits(xMin: 0, xMax: 0);
-            SignalPlot.Plot.SetAxisLimits(yMin: 0, yMax: 100);
+            SignalPlot.Plot.SetAxisLimits(yMin: 0, yMax: 10);
             SignalPlot.Plot.XAxis.Ticks(false);
             SignalPlot.Plot.XAxis.Color(Color.Black);
             SignalPlot.Plot.XAxis2.Color(Color.Black);

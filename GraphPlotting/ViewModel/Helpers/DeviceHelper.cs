@@ -32,8 +32,8 @@ namespace GraphPlotting.ViewModel.Helpers
                         int pulse;
                         int wave;
                         int ss;
-                        if (values.Length == 5 && int.TryParse(values[1], out spo2) && int.TryParse(values[2], out pulse) && 
-                            int.TryParse(values[3], out wave) && int.TryParse(values[4], out ss))
+                        if (values.Length == 5 && int.TryParse(values[4], out spo2) && int.TryParse(values[3], out pulse) && 
+                            int.TryParse(values[2], out wave) && int.TryParse(values[1], out ss))
                         {
                             readings.Add(new Reading(values[0], spo2, pulse, wave, ss, dt));
                         }
