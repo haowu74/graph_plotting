@@ -18,9 +18,10 @@ namespace GraphPlotting.ViewModel.Helpers
 
         public static List<Reading> ReadSerial()
         {
-            var dt = DateTime.Now.Ticks / 10000000;
+            var dt = DateTime.Now.Ticks / 1000000;
             var message = SerialPort.ReadExisting();
             var readings = new List<Reading>();
+            // Debug.Write(message);
             foreach (var ch in message)
             {
                 if (ch == '\n')

@@ -56,8 +56,8 @@ namespace GraphPlotting.View
             SignalPlot.Plot.YAxis2.Color(Color.Black);
             SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.White);
 
-            Waveform.Plot.SetAxisLimits(xMin: 0, xMax: 600);
-            Waveform.Plot.SetAxisLimits(yMin: 0, yMax: 80);
+            Waveform.Plot.SetAxisLimits(xMin: 0, xMax: Configuration.WaveformPlotWidth);
+            Waveform.Plot.SetAxisLimits(yMin: 0, yMax: Configuration.WaveformPlotHeight);
             Waveform.Plot.XAxis.Ticks(false);
             Waveform.Plot.XAxis.Color(Color.White);
             Waveform.Plot.XAxis2.Color(Color.White);
@@ -67,11 +67,14 @@ namespace GraphPlotting.View
             Waveform.Plot.Grid(false);
             Waveform.Plot.Style(figureBackground: Color.Black, dataBackground: Color.Black);
 
-            MainPlot.Plot.SetAxisLimits(xMin: 0, xMax: 600);
-            MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 100, yAxisIndex: 0);
-            MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: 180, yAxisIndex: 1);
+            MainPlot.Plot.SetAxisLimits(xMin: 0, xMax: Configuration.MainPlotWidth);
+            MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: Configuration.Spo2PlotHeight, yAxisIndex: 0);
+            MainPlot.Plot.SetAxisLimits(yMin: 40, yMax: Configuration.PulsePlotHeight, yAxisIndex: 1);
             MainPlot.Plot.XAxis.Ticks(true);
             MainPlot.Plot.XAxis.TickLabelStyle(fontSize: 20);
+            double[] xScaling = { 0, 600, 1200, 1800, 2400, 3000, 3600, 4200, 4800, 5400, 6000 };
+            string[] xScaled = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+            MainPlot.Plot.XAxis.ManualTickPositions(xScaling, xScaled);
             MainPlot.Plot.XAxis.Color(Color.White);
             MainPlot.Plot.XAxis2.Color(Color.White);
             MainPlot.Plot.YAxis.Color(Color.White);

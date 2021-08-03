@@ -78,22 +78,20 @@ namespace GraphPlotting.View
             bar = Channel4.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[3]);
             bar.BarWidth = 1000;
 
-            //double[] X = Enumerable.Range(0, Configuration.TimeSpan).Select(i => (double)i).ToArray();
+            //double[] WaveformX = Enumerable.Repeat(40.0, 600).ToArray();
 
-            double[] WaveformX = Enumerable.Repeat(40.0, 600).ToArray();
-
-            var plot_straight = Channel1.Waveform.Plot.AddSignal(WaveformX);
-            plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
-            plot_straight.LineWidth = 5;
-            plot_straight = Channel2.Waveform.Plot.AddSignal(WaveformX);
-            plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
-            plot_straight.LineWidth = 5;
-            plot_straight = Channel3.Waveform.Plot.AddSignal(WaveformX);
-            plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
-            plot_straight.LineWidth = 5;
-            plot_straight = Channel4.Waveform.Plot.AddSignal(WaveformX);
-            plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
-            plot_straight.LineWidth = 5;
+            //var plot_straight = Channel1.Waveform.Plot.AddSignal(WaveformX);
+            //plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
+            //plot_straight.LineWidth = 5;
+            //plot_straight = Channel2.Waveform.Plot.AddSignal(WaveformX);
+            //plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
+            //plot_straight.LineWidth = 5;
+            //plot_straight = Channel3.Waveform.Plot.AddSignal(WaveformX);
+            //plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
+            //plot_straight.LineWidth = 5;
+            //plot_straight = Channel4.Waveform.Plot.AddSignal(WaveformX);
+            //plot_straight.Color = System.Drawing.Color.FromArgb(0xff, 0xff, 0x00);
+            //plot_straight.LineWidth = 5;
 
             var plot = Channel1.Waveform.Plot.AddScatter(ViewModel.XAxial[0], ViewModel.Waveforms[0]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
