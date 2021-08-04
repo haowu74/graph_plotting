@@ -83,29 +83,29 @@ namespace GraphPlotting.View
             bar = Channel4.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[3]);
             bar.BarWidth = 1000;
 
-            var plot = Channel1.Waveform.Plot.AddScatter(ViewModel.XAxial[0], ViewModel.Waveforms[0]);
+            var plot = Channel1.Waveform.Plot.AddScatter(ViewModel.WaveXAxial[0], ViewModel.Waveforms[0]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
-            plot = Channel2.Waveform.Plot.AddScatter(ViewModel.XAxial[1], ViewModel.Waveforms[1]);
+            plot = Channel2.Waveform.Plot.AddScatter(ViewModel.WaveXAxial[1], ViewModel.Waveforms[1]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
-            plot = Channel3.Waveform.Plot.AddScatter(ViewModel.XAxial[2], ViewModel.Waveforms[2]);
+            plot = Channel3.Waveform.Plot.AddScatter(ViewModel.WaveXAxial[2], ViewModel.Waveforms[2]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
-            plot = Channel4.Waveform.Plot.AddScatter(ViewModel.XAxial[3], ViewModel.Waveforms[3]);
+            plot = Channel4.Waveform.Plot.AddScatter(ViewModel.WaveXAxial[3], ViewModel.Waveforms[3]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
 
-            Channel1.Waveform.Plot.AddScatter(ViewModel.PrevXAxial[0], ViewModel.PrevWaveforms[0]);
+            Channel1.Waveform.Plot.AddScatter(ViewModel.PrevWaveXAxial[0], ViewModel.PrevWaveforms[0]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
-            plot = Channel2.Waveform.Plot.AddScatter(ViewModel.PrevXAxial[1], ViewModel.PrevWaveforms[1]);
+            plot = Channel2.Waveform.Plot.AddScatter(ViewModel.PrevWaveXAxial[1], ViewModel.PrevWaveforms[1]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
-            plot = Channel3.Waveform.Plot.AddScatter(ViewModel.PrevXAxial[2], ViewModel.PrevWaveforms[2]);
+            plot = Channel3.Waveform.Plot.AddScatter(ViewModel.PrevWaveXAxial[2], ViewModel.PrevWaveforms[2]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
-            plot = Channel4.Waveform.Plot.AddScatter(ViewModel.PrevXAxial[3], ViewModel.PrevWaveforms[3]);
+            plot = Channel4.Waveform.Plot.AddScatter(ViewModel.PrevWaveXAxial[3], ViewModel.PrevWaveforms[3]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
             plot.LineWidth = 2;
 

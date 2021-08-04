@@ -18,16 +18,13 @@ namespace GraphPlotting.Model
 
         public int Spo2 { get; set; }
 
-        public long TimeStamp { get; set; }
-
-        public Reading(string id, int spo2, int pulse, int wave, int ss, long dt)
+        public Reading(string id, int spo2, int pulse, int wave, int ss)
         {
             DeviceId = id;
             Spo2 = spo2;
             Pulse = pulse;
             PulseWaveform = wave;
             SignalStrength = ss;
-            TimeStamp = dt;
         }
     }
 }

@@ -127,8 +127,6 @@ namespace GraphPlotting.ViewModel
 
         public void DispatchReadings(List<Reading> readings)
         {
-            long startTime = DateTime.Now.Ticks / Configuration.Factor - Configuration.TimeSpan;
-
             foreach (var r in readings)
             {
                 if (r.DeviceId == "M1")
@@ -155,10 +153,10 @@ namespace GraphPlotting.ViewModel
                     SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength ?? 0);
                     SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength ?? 0);
 
-                    for(var i = 0; i < 4; i++)
+                    for(var i = 0; i < 3; i++)
                     {
-                        Process(i, DeviceReadings[i].Readings, ref Waveforms[i], ref Spo2s[i], ref Pulses[i], ref XAxial[i],
-                            ref PrevWaveforms[i], ref PrevSpo2s[i], ref PrevPulses[i], ref PrevXAxial[i]);
+                        Process(i, DeviceReadings[i].Readings, ref Waveforms[i], ref Spo2s[i], ref Pulses[i], ref XAxial[i], ref WaveXAxial[i],
+                            ref PrevWaveforms[i], ref PrevSpo2s[i], ref PrevPulses[i], ref PrevXAxial[i], ref PrevWaveXAxial[i]);
                     }
 
                     OnPropertyChanged("DeviceReadings");
@@ -180,21 +178,20 @@ namespace GraphPlotting.ViewModel
         public double[][] Pulses { get; set; } = new double[4][];
         public double[][] PrevPulses { get; set; } = new double[4][];
 
-        private void Process(int index, List<Reading> readings, ref double[] waveforms, ref double[] spo2s, ref double[] pulses, ref double[] xAxial,
-            ref double[] prevWaveforms, ref double[] prevSpo2s, ref double[] prevPulses, ref double[] prevXAxial)
+        private void Process(int index, List<Reading> readings, ref double[] waveforms, ref double[] spo2s, ref double[] pulses, ref double[] xAxial, ref double[] waveXAxial,
+            ref double[] prevWaveforms, ref double[] prevSpo2s, ref double[] prevPulses, ref double[] prevXAxial, ref double[] prevWaveXAxial)
         {
-            var current = DateTime.Now.Ticks / Configuration.Factor - 1;
+            var current = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
             Debug.WriteLine(current);
-            var reduced = readings.Where(r => r.TimeStamp > LastTime[index]).GroupBy(r => r.TimeStamp)
-                .Select(g => new Reading(g.Select(g => g.DeviceId).FirstOrDefault(), (int)g.Average(g => g.Spo2), (int)g.Average(g => g.Pulse), (int)g.Average(g => g.PulseWaveform), (int)g.Average(g => g.SignalStrength), g.Key)).OrderBy(r => r.TimeStamp).ToList();
-            readings.RemoveAll(r => r.TimeStamp < LastTime[index]);
-            foreach (var reading in reduced)
+            // Update MainPlot
+            var reduced = readings.LastOrDefault();
+            if (reduced is not null)
             {
-                if (reading.TimeStamp - StartTime[index] >= Configuration.MainPlotWidth)
+                MainPlotPointer[index] = (int)(current - StartTime[index]);
+                if (MainPlotPointer[index] >= Configuration.MainPlotWidth)
                 {
                     MainPlotPointer[index] = 0;
                     StartTime[index] = current;
-                    Array.Copy(waveforms, prevWaveforms, Configuration.MainPlotWidth);
                     Array.Copy(spo2s, prevSpo2s, Configuration.MainPlotWidth);
                     Array.Copy(pulses, prevPulses, Configuration.MainPlotWidth);
                     Array.Copy(xAxial, prevXAxial, Configuration.MainPlotWidth);
@@ -202,30 +199,57 @@ namespace GraphPlotting.ViewModel
                     {
                         spo2s[i] = -1000;
                         pulses[i] = -1000;
-                        waveforms[i] = -1000;
                         xAxial[i] = -1000;
+                    }
+                }
+
+                spo2s[MainPlotPointer[index]] = reduced.Spo2;
+                pulses[MainPlotPointer[index]] = reduced.Pulse;
+                xAxial[MainPlotPointer[index]] = MainPlotPointer[index];
+            }
+
+            // Update WaveformPlot
+            foreach (var reading in readings)
+            { 
+                WaveformPlotPointer[index] += 1;
+                if (WaveformPlotPointer[index] >= Configuration.WaveformPlotWidth)
+                {
+                    WaveformPlotPointer[index] = 0;
+                    WaveStartTime[index] = current;
+                    Array.Copy(waveforms, prevWaveforms, Configuration.WaveformPlotWidth);
+                    Array.Copy(waveXAxial, prevWaveXAxial, Configuration.WaveformPlotWidth);
+                    for (int i = 0; i < Configuration.WaveformPlotWidth; i++)
+                    {
+                        waveforms[i] = -1000;
+                        waveXAxial[i] = -1000;
                     }
                     break;
                 }
-                else
-                {
-                    MainPlotPointer[index] = (int)(reading.TimeStamp - StartTime[index]);
-                }
+                waveforms[WaveformPlotPointer[index]] = reading.PulseWaveform;
+                waveXAxial[WaveformPlotPointer[index]] = WaveformPlotPointer[index];
 
-                waveforms[MainPlotPointer[index]] = reading.PulseWaveform;
-                spo2s[MainPlotPointer[index]] = reading.Spo2;
-                pulses[MainPlotPointer[index]] = reading.Pulse;
-                xAxial[MainPlotPointer[index]] = reading.TimeStamp - StartTime[index];
+                if (index == 0)
+                {
+                    Debug.WriteLine($"{WaveformPlotPointer[index]} {waveXAxial[WaveformPlotPointer[index]]} {waveforms[WaveformPlotPointer[index]]}");
+                }
             }
 
             if (MainPlotPointer[index] > 0)
             {
-                for (var i = MainPlotPointer[index]; i < Configuration.MainPlotWidth; i++)
+                for (var i = MainPlotPointer[index]+1; i < Configuration.MainPlotWidth; i++)
                 {
                     spo2s[i] = spo2s[i-1];
                     pulses[i] = pulses[i-1];
-                    waveforms[i] = waveforms[i - 1];
                     xAxial[i] = xAxial[i - 1];
+                }
+            }
+
+            if (WaveformPlotPointer[index] > 0)
+            {
+                for (var i = WaveformPlotPointer[index]+1; i < Configuration.WaveformPlotWidth; i++)
+                {
+                    waveforms[i] = waveforms[i - 1];
+                    waveXAxial[i] = waveXAxial[i - 1];
                 }
             }
 
@@ -236,10 +260,18 @@ namespace GraphPlotting.ViewModel
                     prevXAxial[i] = prevXAxial[i + 1];
                     prevSpo2s[i] = prevSpo2s[i + 1];
                     prevPulses[i] = prevPulses[i + 1];
-                    prevWaveforms[i] = prevWaveforms[i + 1];
                 }
             }
 
+            for (var i = Configuration.WaveformPlotWidth - 2; i >= 0; i--)
+            {
+                if (prevWaveXAxial[i] < waveXAxial[WaveformPlotPointer[index]])
+                {
+                    prevWaveXAxial[i] = prevWaveXAxial[i + 1];
+                    prevWaveforms[i] = prevWaveforms[i + 1];
+                }
+            }
+            readings.Clear();
             LastTime[index] = current;
         }
 
