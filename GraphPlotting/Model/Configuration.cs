@@ -15,6 +15,5 @@ namespace GraphPlotting.Model
         public static int MainPlotWidth { get; } = 600;
         public static int Spo2PlotHeight { get; } = 100;
         public static int PulsePlotHeight { get; } = 180;
-        public static int Factor { get; } = 10000000;
     }
 }

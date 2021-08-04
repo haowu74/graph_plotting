@@ -18,7 +18,6 @@ namespace GraphPlotting.ViewModel.Helpers
 
         public static List<Reading> ReadSerial()
         {
-            var dt = DateTime.Now.Ticks / Configuration.Factor;
             var message = SerialPort.ReadExisting();
             var readings = new List<Reading>();
             // Debug.Write(message);
@@ -36,7 +35,7 @@ namespace GraphPlotting.ViewModel.Helpers
                         if (values.Length == 5 && int.TryParse(values[4], out spo2) && int.TryParse(values[3], out pulse) && 
                             int.TryParse(values[2], out wave) && int.TryParse(values[1], out ss))
                         {
-                            readings.Add(new Reading(values[0], spo2, pulse, wave, ss, dt));
+                            readings.Add(new Reading(values[0], spo2, pulse, wave, ss));
                         }
                     }
                     buffer = "";
