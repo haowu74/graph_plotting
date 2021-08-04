@@ -82,7 +82,7 @@ namespace GraphPlotting.View
             MainPlot.Plot.YAxis.TickLabelStyle(fontSize: 20);
             MainPlot.Plot.YAxis2.TickLabelStyle(fontSize: 20);
             double[] yScaling = { 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180 };
-            string[] yScaled = { "40", "50", "60", "70", "80", "90", "100", "110", "120", "130", "140", "150", "160", "170", "180" };
+            string[] yScaled = { "40", "", "60", "", "80", "", "100", "", "120", "", "140", "", "160", "", "180" };
             MainPlot.Plot.YAxis2.ManualTickPositions(yScaling, yScaled);
             MainPlot.Plot.YAxis2.Color(Color.FromArgb(0xef, 0xde, 0x00));
             MainPlot.Plot.YAxis.Label("SPO2(%)", Color.FromArgb(0xb2, 0x00, 0x00), bold: true, size:20);
