@@ -137,39 +137,39 @@ namespace GraphPlotting.ViewModel
                 {
                     DeviceReadings[3].Readings.Add(r);
                 }
+            }
 
-                if(Updating || UpdatingWave)
+            if(Updating || UpdatingWave)
+            {
+                SignalPlotValues[0][0] = (double)(DeviceReadings[0]?.Reading?.SignalStrength ?? 0);
+                SignalPlotValues[1][0] = (double)(DeviceReadings[1]?.Reading?.SignalStrength ?? 0);
+                SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength ?? 0);
+                SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength ?? 0);
+
+                for(var i = 0; i < 3; i++)
                 {
-                    SignalPlotValues[0][0] = (double)(DeviceReadings[0]?.Reading?.SignalStrength ?? 0);
-                    SignalPlotValues[1][0] = (double)(DeviceReadings[1]?.Reading?.SignalStrength ?? 0);
-                    SignalPlotValues[2][0] = (double)(DeviceReadings[2]?.Reading?.SignalStrength ?? 0);
-                    SignalPlotValues[3][0] = (double)(DeviceReadings[3]?.Reading?.SignalStrength ?? 0);
-
-                    for(var i = 0; i < 3; i++)
+                    var reading = DeviceReadings[i].Readings.LastOrDefault();
+                    if (reading is not null)
                     {
-                        var reading = DeviceReadings[i].Readings.LastOrDefault();
-                        if (reading is not null)
+                        DeviceReadings[i].Reading.DeviceId = reading?.DeviceId ?? "";
+                        if (reading.Pulse > 0)
                         {
-                            DeviceReadings[i].Reading.DeviceId = reading?.DeviceId ?? "";
-                            if (reading.Pulse > 0)
-                            {
-                                DeviceReadings[i].Reading.Pulse = reading.Pulse;
-                            }
-                            
-                            DeviceReadings[i].Reading.Spo2 = reading?.Spo2 ?? 0;
-                            DeviceReadings[i].Reading.PulseWaveform = reading?.PulseWaveform ?? 0;
-                            DeviceReadings[i].Reading.SignalStrength = reading?.SignalStrength ?? 0;
+                            DeviceReadings[i].Reading.Pulse = reading.Pulse;
                         }
-
-                        Process(i, DeviceReadings[i].Readings, ref Waveforms[i], ref Spo2s[i], ref Pulses[i], ref XAxial[i], ref WaveXAxial[i],
-                            ref PrevWaveforms[i], ref PrevSpo2s[i], ref PrevPulses[i], ref PrevXAxial[i], ref PrevWaveXAxial[i]);
+                            
+                        DeviceReadings[i].Reading.Spo2 = reading?.Spo2 ?? 0;
+                        DeviceReadings[i].Reading.PulseWaveform = reading?.PulseWaveform ?? 0;
+                        DeviceReadings[i].Reading.SignalStrength = reading?.SignalStrength ?? 0;
                     }
 
-                    OnPropertyChanged("DeviceReadings");
-
-                    Updating = false;
-                    UpdatingWave = false;
+                    Process(i, DeviceReadings[i].Readings, ref Waveforms[i], ref Spo2s[i], ref Pulses[i], ref XAxial[i], ref WaveXAxial[i],
+                        ref PrevWaveforms[i], ref PrevSpo2s[i], ref PrevPulses[i], ref PrevXAxial[i], ref PrevWaveXAxial[i]);
                 }
+
+                OnPropertyChanged("DeviceReadings");
+
+                Updating = false;
+                UpdatingWave = false;
             }
         }
 
@@ -188,8 +188,6 @@ namespace GraphPlotting.ViewModel
             ref double[] prevWaveforms, ref double[] prevSpo2s, ref double[] prevPulses, ref double[] prevXAxial, ref double[] prevWaveXAxial)
         {
             var current = ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds();
-            // Debug.WriteLine(current);
-            // Update MainPlot
             var reduced = readings.LastOrDefault();
             if (reduced is not null)
             {
