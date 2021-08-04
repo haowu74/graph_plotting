@@ -40,6 +40,11 @@ namespace GraphPlotting.View
                 _renderTimer.Interval = TimeSpan.FromMilliseconds(100);
                 _renderTimer.Tick += Render;
                 _renderTimer.Start();
+
+                Channel4.Waveform.Visibility = Visibility.Collapsed;
+                Channel4.SignalPlot.Visibility = Visibility.Collapsed;
+                Channel4.MainPlot.SetValue(Grid.RowSpanProperty, 3);
+                Channel4.LoveHeartGrid.SetValue(Grid.ColumnSpanProperty, 3);
             };
 
             Closing += (sender, args) =>
