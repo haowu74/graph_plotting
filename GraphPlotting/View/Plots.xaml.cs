@@ -27,6 +27,8 @@ namespace GraphPlotting.View
 
         private DispatcherTimer _renderTimer;
 
+        private DispatcherTimer _waveRenderTimer;
+
         public Plots()
         {
             InitializeComponent();
@@ -37,9 +39,14 @@ namespace GraphPlotting.View
             Loaded += (sender, args) =>
             {
                 _renderTimer = new DispatcherTimer();
-                _renderTimer.Interval = TimeSpan.FromMilliseconds(100);
+                _renderTimer.Interval = TimeSpan.FromMilliseconds(1000);
                 _renderTimer.Tick += Render;
                 _renderTimer.Start();
+
+                _waveRenderTimer = new DispatcherTimer();
+                _waveRenderTimer.Interval = TimeSpan.FromMilliseconds(100);
+                _waveRenderTimer.Tick += WaveRender;
+                _waveRenderTimer.Start();
 
                 Channel4.Waveform.Visibility = Visibility.Collapsed;
                 Channel4.SignalPlot.Visibility = Visibility.Collapsed;
@@ -47,10 +54,12 @@ namespace GraphPlotting.View
                 Channel4.LoveHeartGrid.SetValue(Grid.ColumnSpanProperty, 3);
             };
 
-            Closing += (sender, args) =>
+            Unloaded += (sender, args) =>
             {
                 _renderTimer.Stop();
                 _renderTimer = null;
+                _waveRenderTimer.Stop();
+                _waveRenderTimer = null;
                 DeviceHelper.Disconnect();
             };
         }
@@ -65,6 +74,7 @@ namespace GraphPlotting.View
                 Application.Current.Shutdown();
             }
         }
+
 
         private void About_Click(object sender, RoutedEventArgs e)
         {
@@ -126,23 +136,6 @@ namespace GraphPlotting.View
             plot.LineWidth = 2;
             plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
 
-            plot = Channel1.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[0], ViewModel.PrevSpo2s[0]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-            plot = Channel2.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[1], ViewModel.PrevSpo2s[1]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-            plot = Channel3.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[2], ViewModel.PrevSpo2s[2]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-            plot = Channel4.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[3], ViewModel.PrevSpo2s[3]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-
             plot = Channel1.MainPlot.Plot.AddScatter(ViewModel.XAxial[0], ViewModel.Pulses[0]);
             plot.YAxisIndex = 1;
             plot.LineWidth = 2;
@@ -159,23 +152,6 @@ namespace GraphPlotting.View
             plot.YAxisIndex = 1;
             plot.LineWidth = 2;
             plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-
-            plot = Channel1.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[0], ViewModel.PrevPulses[0]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-            plot = Channel2.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[1], ViewModel.PrevPulses[1]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-            plot = Channel3.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[2], ViewModel.PrevPulses[2]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-            plot = Channel4.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[3], ViewModel.PrevPulses[3]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
         }
 
         private void Render(object sender, EventArgs e)
@@ -185,6 +161,30 @@ namespace GraphPlotting.View
             Channel2.Render();
             Channel3.Render();
             Channel4.Render();
+        }
+
+        private void WaveRender(object sender, EventArgs e)
+        {
+            ViewModel.UpdateWave();
+            Channel1.WaveRender();
+            Channel2.WaveRender();
+            Channel3.WaveRender();
+            Channel4.WaveRender();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show("Closing the application?",
+                    "Close application",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

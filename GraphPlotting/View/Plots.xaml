@@ -7,7 +7,8 @@
         xmlns:uc="clr-namespace:GraphPlotting.View"
         xmlns:vm="clr-namespace:GraphPlotting.ViewModel"
         mc:Ignorable="d"
-        Title="SpO2 Integrator" Height="1000" Width="800">
+        Title="SpO2 Integrator" Height="1000" Width="800"
+        Closing="Window_Closing">
     <Window.DataContext>
         <vm:PlotsVM />
     </Window.DataContext>

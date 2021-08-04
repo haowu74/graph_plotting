@@ -146,7 +146,7 @@ namespace GraphPlotting.ViewModel
                     DeviceReadings[3].Readings.Add(r);
                 }
 
-                if(Updating)
+                if(Updating || UpdatingWave)
                 {
                     SignalPlotValues[0][0] = (double)(DeviceReadings[0]?.Reading?.SignalStrength ?? 0);
                     SignalPlotValues[1][0] = (double)(DeviceReadings[1]?.Reading?.SignalStrength ?? 0);
@@ -162,6 +162,7 @@ namespace GraphPlotting.ViewModel
                     OnPropertyChanged("DeviceReadings");
 
                     Updating = false;
+                    UpdatingWave = false;
                 }
             }
         }
@@ -200,6 +201,19 @@ namespace GraphPlotting.ViewModel
                         spo2s[i] = -1000;
                         pulses[i] = -1000;
                         xAxial[i] = -1000;
+                    }
+                }
+                else
+                {
+                    if (MainPlotPointer[index] >= Configuration.MainPlotWidth * 0.9)
+                    {
+                        for (int i = 0; i < Configuration.MainPlotWidth * 0.9; i++)
+                        {
+                            spo2s[i] = spo2s[i+60];
+                            pulses[i] = pulses[i+60];
+                        }
+                        MainPlotPointer[index] = (int)( Configuration.MainPlotWidth * 0.8);
+                        StartTime[index] = StartTime[index] + (int)(Configuration.MainPlotWidth * 0.1);
                     }
                 }
 
@@ -280,7 +294,14 @@ namespace GraphPlotting.ViewModel
             Updating = true;
         }
 
-        public bool Updating { get; set; }
+        public void UpdateWave()
+        {
+            UpdatingWave = true;
+        }
+
+        private bool Updating;
+
+        private bool UpdatingWave;
 
         public double[][] XAxial { get; set; } = new double[4][];
         public double[][] PrevXAxial { get; set; } = new double[4][];
