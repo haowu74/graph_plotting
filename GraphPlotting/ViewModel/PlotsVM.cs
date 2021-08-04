@@ -221,7 +221,7 @@ namespace GraphPlotting.ViewModel
                     for (int i = 0; i < Configuration.WaveformPlotWidth; i++)
                     {
                         waveforms[i] = -1000;
-                        xAxial[i] = -1000;
+                        waveXAxial[i] = -1000;
                     }
                     break;
                 }
@@ -236,7 +236,7 @@ namespace GraphPlotting.ViewModel
 
             if (MainPlotPointer[index] > 0)
             {
-                for (var i = MainPlotPointer[index]; i < Configuration.MainPlotWidth; i++)
+                for (var i = MainPlotPointer[index]+1; i < Configuration.MainPlotWidth; i++)
                 {
                     spo2s[i] = spo2s[i-1];
                     pulses[i] = pulses[i-1];
@@ -246,7 +246,7 @@ namespace GraphPlotting.ViewModel
 
             if (WaveformPlotPointer[index] > 0)
             {
-                for (var i = WaveformPlotPointer[index]; i < Configuration.WaveformPlotWidth; i++)
+                for (var i = WaveformPlotPointer[index]+1; i < Configuration.WaveformPlotWidth; i++)
                 {
                     waveforms[i] = waveforms[i - 1];
                     waveXAxial[i] = waveXAxial[i - 1];
