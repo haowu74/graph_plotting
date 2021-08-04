@@ -28,7 +28,7 @@
             <TextBlock Foreground="#ED1C24" FontSize="10" FontWeight="Bold">SPO2 (%)</TextBlock>
             <TextBlock Foreground="#ED1C24" Background="#222222" 
                        Grid.Row="1" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="50" TextAlignment="Center"
-                       Text="{Binding Path=Reading.Spo2, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                       Text="{Binding Path=Reading.Spo2, Mode=OneWay}">
                 
             </TextBlock>
         </Grid>
@@ -40,7 +40,7 @@
             <TextBlock Foreground="#FFF200" FontSize="10" FontWeight="Bold">PULSE (bpm)</TextBlock>
             <TextBlock Foreground="#FFF200" Background="#222222" 
                        Grid.Row="1" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="50" TextAlignment="Center"
-                       Text="{Binding Path=Reading.Pulse, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                       Text="{Binding Path=Reading.Pulse, Mode=OneWay}">
             </TextBlock>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" Background="Black" ClipToBounds="True">

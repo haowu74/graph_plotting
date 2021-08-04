@@ -55,7 +55,7 @@ namespace GraphPlotting.View
             SignalPlot.Plot.YAxis.Color(Color.Black);
             SignalPlot.Plot.YAxis2.Color(Color.Black);
             SignalPlot.Plot.Style(figureBackground: Color.Black, dataBackground: Color.White);
-
+            
             Waveform.Plot.SetAxisLimits(xMin: 0, xMax: Configuration.WaveformPlotWidth);
             Waveform.Plot.SetAxisLimits(yMin: 0, yMax: Configuration.WaveformPlotHeight);
             Waveform.Plot.XAxis.Ticks(false);

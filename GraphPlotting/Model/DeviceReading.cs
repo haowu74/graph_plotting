@@ -14,27 +14,12 @@ namespace GraphPlotting.Model
 
         public DeviceReading()
         {
+            Reading = new Reading($"", 0, 0, 0, 0);
         }
 
         public List<Reading> Readings = new List<Reading>();
 
-        private Reading reading;
-
-        public Reading Reading
-        {
-            get
-            {
-                if(Readings.LastOrDefault() != null)
-                {
-                    reading = Readings.LastOrDefault();
-                    return reading;
-                }
-                else
-                {
-                    return reading;
-                }
-            }
-        }
+        public Reading Reading { get; set; } 
 
     }
 }

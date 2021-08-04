@@ -86,12 +86,16 @@ namespace GraphPlotting.View
         {
             var bar = Channel1.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[0]);
             bar.BarWidth = 1000;
+            bar.ShowValuesAboveBars = true;
             bar = Channel2.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[1]);
             bar.BarWidth = 1000;
+            bar.ShowValuesAboveBars = true;
             bar = Channel3.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[2]);
             bar.BarWidth = 1000;
+            bar.ShowValuesAboveBars = true;
             bar = Channel4.SignalPlot.Plot.AddBar(ViewModel.SignalPlotValues[3]);
             bar.BarWidth = 1000;
+            bar.ShowValuesAboveBars = true;
 
             var plot = Channel1.Waveform.Plot.AddScatter(ViewModel.WaveXAxial[0], ViewModel.Waveforms[0]);
             plot.Color = System.Drawing.Color.FromArgb(0xe7, 0x73, 0x23);
