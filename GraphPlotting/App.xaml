@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GraphPlotting"
              StartupUri="View/Plots.xaml"
-             Exit="Application_Exit">
+             >
     <Application.Resources>
          
     </Application.Resources>

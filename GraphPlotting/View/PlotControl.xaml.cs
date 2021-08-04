@@ -101,8 +101,12 @@ namespace GraphPlotting.View
         public void Render()
         {
             SignalPlot.Render();
-            Waveform.Render();
             MainPlot.Render();
+        }
+
+        public void WaveRender()
+        {
+            Waveform.Render();
         }
     }
 }
