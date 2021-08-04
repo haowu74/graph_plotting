@@ -126,23 +126,6 @@ namespace GraphPlotting.View
             plot.LineWidth = 2;
             plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
 
-            plot = Channel1.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[0], ViewModel.PrevSpo2s[0]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-            plot = Channel2.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[1], ViewModel.PrevSpo2s[1]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-            plot = Channel3.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[2], ViewModel.PrevSpo2s[2]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-            plot = Channel4.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[3], ViewModel.PrevSpo2s[3]);
-            plot.YAxisIndex = 0;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xb2, 0x00, 0x00);
-
             plot = Channel1.MainPlot.Plot.AddScatter(ViewModel.XAxial[0], ViewModel.Pulses[0]);
             plot.YAxisIndex = 1;
             plot.LineWidth = 2;
@@ -156,23 +139,6 @@ namespace GraphPlotting.View
             plot.LineWidth = 2;
             plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
             plot = Channel4.MainPlot.Plot.AddScatter(ViewModel.XAxial[3], ViewModel.Pulses[3]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-
-            plot = Channel1.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[0], ViewModel.PrevPulses[0]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-            plot = Channel2.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[1], ViewModel.PrevPulses[1]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-            plot = Channel3.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[2], ViewModel.PrevPulses[2]);
-            plot.YAxisIndex = 1;
-            plot.LineWidth = 2;
-            plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);
-            plot = Channel4.MainPlot.Plot.AddScatter(ViewModel.PrevXAxial[3], ViewModel.PrevPulses[3]);
             plot.YAxisIndex = 1;
             plot.LineWidth = 2;
             plot.Color = System.Drawing.Color.FromArgb(0xef, 0xde, 0x00);

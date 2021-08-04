@@ -202,6 +202,19 @@ namespace GraphPlotting.ViewModel
                         xAxial[i] = -1000;
                     }
                 }
+                else
+                {
+                    if (MainPlotPointer[index] >= Configuration.MainPlotWidth * 0.9)
+                    {
+                        for (int i = 0; i < Configuration.MainPlotWidth * 0.9; i++)
+                        {
+                            spo2s[i] = spo2s[i+60];
+                            pulses[i] = pulses[i+60];
+                        }
+                        MainPlotPointer[index] = (int)( Configuration.MainPlotWidth * 0.8);
+                        StartTime[index] = StartTime[index] + (int)(Configuration.MainPlotWidth * 0.1);
+                    }
+                }
 
                 spo2s[MainPlotPointer[index]] = reduced.Spo2;
                 pulses[MainPlotPointer[index]] = reduced.Pulse;

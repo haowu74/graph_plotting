@@ -18,7 +18,23 @@ namespace GraphPlotting.Model
 
         public List<Reading> Readings = new List<Reading>();
 
-        public Reading Reading => Readings.LastOrDefault();
+        private Reading reading;
+
+        public Reading Reading
+        {
+            get
+            {
+                if(Readings.LastOrDefault() != null)
+                {
+                    reading = Readings.LastOrDefault();
+                    return reading;
+                }
+                else
+                {
+                    return reading;
+                }
+            }
+        }
 
     }
 }
