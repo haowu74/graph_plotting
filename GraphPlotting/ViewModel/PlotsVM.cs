@@ -152,11 +152,7 @@ namespace GraphPlotting.ViewModel
                     if (reading is not null)
                     {
                         DeviceReadings[i].Reading.DeviceId = reading?.DeviceId ?? "";
-                        if (reading.Pulse > 0)
-                        {
-                            DeviceReadings[i].Reading.Pulse = reading.Pulse;
-                        }
-                            
+                        DeviceReadings[i].Reading.Pulse = reading.Pulse;
                         DeviceReadings[i].Reading.Spo2 = reading?.Spo2 ?? 0;
                         DeviceReadings[i].Reading.PulseWaveform = reading?.PulseWaveform ?? 0;
                         DeviceReadings[i].Reading.SignalStrength = reading?.SignalStrength ?? 0;
