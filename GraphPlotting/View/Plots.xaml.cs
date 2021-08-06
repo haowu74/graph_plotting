@@ -52,6 +52,8 @@ namespace GraphPlotting.View
                 Channel4.SignalPlot.Visibility = Visibility.Collapsed;
                 Channel4.MainPlot.SetValue(Grid.RowSpanProperty, 3);
                 Channel4.LoveHeartGrid.SetValue(Grid.ColumnSpanProperty, 3);
+
+                DeviceHelper.OpenFile();
             };
 
             Unloaded += (sender, args) =>
@@ -61,6 +63,7 @@ namespace GraphPlotting.View
                 _waveRenderTimer.Stop();
                 _waveRenderTimer = null;
                 DeviceHelper.Disconnect();
+                DeviceHelper.CloseFile();
             };
         }
 
