@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO.Ports;
 using System.Diagnostics;
+using System.IO;
 
 namespace GraphPlotting.ViewModel.Helpers
 {
@@ -16,11 +17,19 @@ namespace GraphPlotting.ViewModel.Helpers
 
         private static int index = 0;
 
+        private static string logMessage = "";
+
         public static List<Reading> ReadSerial()
         {
             var message = SerialPort.ReadExisting();
             var readings = new List<Reading>();
-            // Debug.Write(message);
+            logMessage += message;
+            if (logMessage.Length > 2000)
+            {
+                LogMessage();
+                logMessage = "";
+            }
+
             foreach (var ch in message)
             {
                 if (ch == '\n')
@@ -83,6 +92,23 @@ namespace GraphPlotting.ViewModel.Helpers
                 ports.Add(s);
             }
             return ports;
+        }
+
+        private static StreamWriter Sw;
+
+        private static void LogMessage()
+        {
+            Sw.Write(logMessage);
+        }
+
+        public static void OpenFile()
+        {
+            Sw = File.Exists(@".\log.txt") ? File.CreateText(@".\log.txt") : File.AppendText(@".\log.txt");
+        }
+
+        public static void CloseFile()
+        {
+            Sw.Close();
         }
     }
 }
