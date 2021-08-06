@@ -101,9 +101,15 @@ namespace GraphPlotting.ViewModel.Helpers
             Sw.Write(logMessage);
         }
 
+        private static string logFile = @".\log.txt";
+
         public static void OpenFile()
         {
-            Sw = File.Exists(@".\log.txt") ? File.CreateText(@".\log.txt") : File.AppendText(@".\log.txt");
+            if (File.Exists(logFile))
+            {
+                File.Delete(logFile);
+            }
+            Sw = File.CreateText(logFile);
         }
 
         public static void CloseFile()
