@@ -43,6 +43,9 @@ namespace GraphPlotting.ViewModel
             ConnectCommand = new ConnectCommand(this);
             ClearCommand = new ClearCommand(this);
             SelectPortCommand = new SelectPortCommand(this);
+            MeanCommand = new MeanCommand(this);
+            Filter1Command = new Filter1Command(this);
+            Filter2Command = new Filter2Command(this);
 
             SerialPorts = DeviceHelper.GetSerialPorts();
             SelectPortCommands = new ObservableCollection<SelectPort>();
@@ -80,6 +83,9 @@ namespace GraphPlotting.ViewModel
         public ConnectCommand ConnectCommand { get; set; }
 
         public ClearCommand ClearCommand { get; set; }
+        public MeanCommand MeanCommand { get; set; }
+        public Filter1Command Filter1Command { get; set; }
+        public Filter2Command Filter2Command { get; set; }
 
         public ObservableCollection<SelectPort> SelectPortCommands { get; set; }
 
@@ -354,6 +360,6 @@ namespace GraphPlotting.ViewModel
         private long[] StartTime = new long[4] { 0, 0, 0, 0 };
 
         private long[] WaveStartTime = new long[4] { 0, 0, 0, 0 };
-
+        public FilterMode FilterMode { get; set; }
     }
 }
