@@ -8,6 +8,7 @@ namespace GraphPlotting.Model
 {
     public enum FilterMode
     {
+        None,
         Mean,
         Filter1,
         Filter2
