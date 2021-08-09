@@ -43,6 +43,9 @@ namespace GraphPlotting.ViewModel
             ConnectCommand = new ConnectCommand(this);
             ClearCommand = new ClearCommand(this);
             SelectPortCommand = new SelectPortCommand(this);
+            MeanCommand = new MeanCommand(this);
+            Filter1Command = new Filter1Command(this);
+            Filter2Command = new Filter2Command(this);
 
             SerialPorts = DeviceHelper.GetSerialPorts();
             SelectPortCommands = new ObservableCollection<SelectPort>();
@@ -80,6 +83,9 @@ namespace GraphPlotting.ViewModel
         public ConnectCommand ConnectCommand { get; set; }
 
         public ClearCommand ClearCommand { get; set; }
+        public MeanCommand MeanCommand { get; set; }
+        public Filter1Command Filter1Command { get; set; }
+        public Filter2Command Filter2Command { get; set; }
 
         public ObservableCollection<SelectPort> SelectPortCommands { get; set; }
 
@@ -161,7 +167,12 @@ namespace GraphPlotting.ViewModel
                     Process(i, DeviceReadings[i].Readings, ref Waveforms[i], ref Spo2s[i], ref Pulses[i], ref XAxial[i], ref WaveXAxial[i],
                         ref PrevWaveforms[i], ref PrevSpo2s[i], ref PrevPulses[i], ref PrevXAxial[i], ref PrevWaveXAxial[i]);
                 }
-
+                CalculatePlot4(FilterMode);
+                if (FilterMode == FilterMode.Mean)
+                {
+                    DeviceReadings[3].Reading.Pulse = (DeviceReadings[0].Reading.Pulse + DeviceReadings[1].Reading.Pulse + DeviceReadings[2].Reading.Pulse) / 3;
+                    DeviceReadings[3].Reading.Spo2 = (DeviceReadings[0].Reading.Spo2 + DeviceReadings[1].Reading.Spo2 + DeviceReadings[2].Reading.Spo2) / 3;
+                }
                 OnPropertyChanged("DeviceReadings");
 
                 Updating = false;
@@ -354,6 +365,19 @@ namespace GraphPlotting.ViewModel
         private long[] StartTime = new long[4] { 0, 0, 0, 0 };
 
         private long[] WaveStartTime = new long[4] { 0, 0, 0, 0 };
+        public FilterMode FilterMode { get; set; }
 
+        private void CalculatePlot4(FilterMode mode)
+        {
+            if(mode == FilterMode.Mean)
+            {
+                for (var i = 0; i < Configuration.MainPlotWidth; i++)
+                {
+                    Spo2s[3][i] = (Spo2s[0][i] + Spo2s[1][i] + Spo2s[2][i]) / 3;
+                    Pulses[3][i] = (Pulses[0][i] + Pulses[1][i] + Pulses[2][i]) / 3;
+                    XAxial[3][i] = Math.Max(Math.Max(XAxial[0][i], XAxial[1][i]), XAxial[2][i]);
+                }
+            }
+        }
     }
 }
