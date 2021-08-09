@@ -373,8 +373,26 @@ namespace GraphPlotting.ViewModel
             {
                 for (var i = 0; i < Configuration.MainPlotWidth; i++)
                 {
-                    Spo2s[3][i] = (Spo2s[0][i] + Spo2s[1][i] + Spo2s[2][i]) / 3;
-                    Pulses[3][i] = (Pulses[0][i] + Pulses[1][i] + Pulses[2][i]) / 3;
+                    int spo2Valid = 0;
+                    int pulseValid = 0;
+                    double spo2Sum = 0;
+                    double pulseSum = 0;
+                    for(var j = 0; j < 3; j++)
+                    {
+                        if (Spo2s[j][i] >= Configuration.Spo2Min && Spo2s[j][i] <= Configuration.Spo2Max)
+                        {
+                            spo2Sum += Spo2s[j][i];
+                            spo2Valid += 1;
+                        }
+                        if (Pulses[j][i] >= Configuration.PulseMin && Pulses[j][i] <= Configuration.PulseMax)
+                        {
+                            pulseSum += Pulses[j][i];
+                            pulseValid += 1;
+                        }
+                    }
+                    
+                    Spo2s[3][i] = spo2Valid == 0 ? 0 : (spo2Sum / spo2Valid);
+                    Pulses[3][i] = pulseValid == 0 ? 0 : (pulseSum / pulseValid);
                     XAxial[3][i] = Math.Max(Math.Max(XAxial[0][i], XAxial[1][i]), XAxial[2][i]);
                 }
             }
