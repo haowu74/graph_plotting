@@ -21,7 +21,14 @@ namespace GraphPlotting.ViewModel.Commands
 
         public void Execute(object parameter)
         {
-            ViewModel.FilterMode = FilterMode.Mean;
+            if (ViewModel.FilterMode != FilterMode.Mean)
+            {
+                ViewModel.FilterMode = FilterMode.Mean;
+            }
+            else
+            {
+                ViewModel.FilterMode = FilterMode.None;
+            }
         }
 
         public MeanCommand(PlotsVM vm)

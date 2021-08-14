@@ -101,7 +101,7 @@ namespace GraphPlotting.ViewModel.Helpers
             Sw.Write(logMessage);
         }
 
-        private static string logFile = @".\log.txt";
+        private static string logFile = @".\log.csv";
 
         public static void OpenFile()
         {

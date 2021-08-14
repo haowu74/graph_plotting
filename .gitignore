@@ -10,3 +10,4 @@
 /GraphPlotting/bin/Debug/net5.0-windows/runtimes
 net5.0-windows.zip
 log.txt
+/GraphPlotting/bin/Release/net5.0-windows/log.csv

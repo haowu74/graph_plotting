@@ -170,8 +170,25 @@ namespace GraphPlotting.ViewModel
                 CalculatePlot4(FilterMode);
                 if (FilterMode == FilterMode.Mean)
                 {
-                    DeviceReadings[3].Reading.Pulse = (DeviceReadings[0].Reading.Pulse + DeviceReadings[1].Reading.Pulse + DeviceReadings[2].Reading.Pulse) / 3;
-                    DeviceReadings[3].Reading.Spo2 = (DeviceReadings[0].Reading.Spo2 + DeviceReadings[1].Reading.Spo2 + DeviceReadings[2].Reading.Spo2) / 3;
+                    int spo2Valid = 0;
+                    int pulseValid = 0;
+                    double spo2Sum = 0;
+                    double pulseSum = 0;
+                    for(var i = 0; i < 3; i++)
+                    {
+                        if (DeviceReadings[i].Reading.Pulse >= Configuration.PulseMin && DeviceReadings[i].Reading.Pulse <= Configuration.PulseMax)
+                        {
+                            pulseValid += 1;
+                            pulseSum += DeviceReadings[i].Reading.Pulse;
+                        }
+                        if (DeviceReadings[i].Reading.Spo2 >= Configuration.Spo2Min && DeviceReadings[i].Reading.Spo2 <= Configuration.Spo2Max)
+                        {
+                            spo2Valid += 1;
+                            spo2Sum += DeviceReadings[i].Reading.Spo2;
+                        }
+                    }
+                    DeviceReadings[3].Reading.Pulse = pulseValid == 0 ? 0 : (int)(pulseSum / pulseValid);
+                    DeviceReadings[3].Reading.Spo2 = spo2Valid == 0 ? 0 : (int)(spo2Sum / spo2Valid);
                 }
                 OnPropertyChanged("DeviceReadings");
 
@@ -365,7 +382,25 @@ namespace GraphPlotting.ViewModel
         private long[] StartTime = new long[4] { 0, 0, 0, 0 };
 
         private long[] WaveStartTime = new long[4] { 0, 0, 0, 0 };
-        public FilterMode FilterMode { get; set; }
+
+        private FilterMode filterMode;
+        public FilterMode FilterMode 
+        { 
+            get
+            {
+                return filterMode;
+            }
+            set
+            {
+                filterMode = value;
+                OnPropertyChanged("IsMeanMode");
+            }
+        }
+
+        public bool IsMeanMode 
+        {
+            get => FilterMode == FilterMode.Mean;
+        }
 
         private void CalculatePlot4(FilterMode mode)
         {
